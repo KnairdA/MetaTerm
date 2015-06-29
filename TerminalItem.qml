@@ -8,60 +8,108 @@ Item {
 
 	height: elementList.height
 
-	function focus() {
+	function select() {
 		if ( command.readOnly ) {
-			elementList.children[1].focus();
+			elementList.children[1].select();
 		} else {
-			command.forceActiveFocus();
+			highlighter.select();
 		}
 	}
 
-	Column {
-		id: elementList
-
-		function createTerminal(program) {
-			var terminal = Qt.createComponent("EmbeddedTerminal.qml");
-			var instantiateTerminal = function() {
-				terminal.createObject(elementList, {
-					"columns": 90,
-					"lines": 20,
-					"program": program,
-					"workingDirectory": "$HOME"
-				});
-			}
-
-			if ( terminal.status == Component.Ready ) {
-				instantiateTerminal();
-			} else {
-				terminal.statusChanged.connect(instantiateTerminal);
-			}
+	function deselect() {
+		if ( command.readOnly ) {
+			elementList.children[1].deselect();
+		} else {
+			highlighter.deselect();
 		}
+	}
 
-		RowLayout {
-			width: terminalItem.width
+	function forceActiveFocus() {
+		if ( command.readOnly ) {
+			scope.forceActiveFocus();
+		} else {
+			scope.forceActiveFocus();
+			highlighter.select();
+			highlighter.focus();
+		}
+	}
 
-			Text {
-				text: "> "
-				font.pointSize: 18
-				color: "white"
+	function unfocus() {
+		if ( !command.readOnly ) {
+			highlighter.unfocus();
+		}
+	}
+
+	FocusScope {
+		id: scope
+
+		Column {
+			id: elementList
+
+			function createTerminal(program) {
+				var terminal = Qt.createComponent("EmbeddedTerminal.qml");
+				var instantiateTerminal = function() {
+					terminal.createObject(elementList, {
+						"columns": 90,
+						"lines": 20,
+						"program": program,
+						"workingDirectory": "$HOME",
+						"focus": true
+					});
+				}
+
+				if ( terminal.status == Component.Ready ) {
+					instantiateTerminal();
+				} else {
+					terminal.statusChanged.connect(instantiateTerminal);
+				}
 			}
 
-			TextInput {
-				id: command
+			RowLayout {
+				width: terminalItem.width
 
-				font.pointSize: 18
-				color: "white"
-				selectedTextColor: "#161616"
-				selectionColor: "white"
-				selectByMouse: true
+				Rectangle {
+					id: highlighter
 
-				Layout.fillWidth: true
+					width: 10
+					height: command.height
+					opacity: 0
 
-				onAccepted: {
-					if ( !readOnly ) {
-						readOnly = true;
-						elementList.createTerminal(text);
-						terminalItem.executed();
+					color: "#909636"
+
+					Behavior on opacity {
+						NumberAnimation {
+							duration: 300
+							easing.type: Easing.OutCubic
+						}
+					}
+
+					function select()   { opacity = 1         }
+					function deselect() { opacity = 0         }
+					function focus()    { color   = "#352F6A" }
+					function unfocus()  { color   = "#909636" }
+				}
+
+				TextInput {
+					id: command
+
+					font.pointSize: 18
+					color: "white"
+					selectedTextColor: "#161616"
+					selectionColor: "white"
+					selectByMouse: true
+					focus: true
+
+					Layout.fillWidth: true
+
+					onAccepted: {
+						if ( !readOnly ) {
+							readOnly = true;
+							focus    = false;
+							elementList.createTerminal(text);
+							terminalItem.executed();
+							highlighter.deselect();
+						}
 					}
 				}
 			}

@@ -12,7 +12,8 @@ Item {
 	width: container.width
 	height: container.height
 
-	function focus() { terminal.forceActiveFocus() }
+	function select()   { highlighter.select()   }
+	function deselect() { highlighter.deselect() }
 
 	Row {
 		id: container
@@ -23,7 +24,7 @@ Item {
 			width: 10
 			height: terminal.height
 
-			color: "#aadb0f"
+			color: "#909636"
 
 			Behavior on opacity {
 				NumberAnimation {
@@ -32,8 +33,10 @@ Item {
 				}
 			}
 
-			function focus()   { opacity = 1 }
-			function unfocus() { opacity = 0 }
+			function select()   { opacity = 1         }
+			function deselect() { opacity = 0         }
+			function focus()    { color   = "#352F6A" }
+			function unfocus()  { color   = "#909636" }
 		}
 
 		Rectangle {
@@ -66,15 +69,14 @@ Item {
 					}
 				}
 
-				MouseArea {
-					anchors.fill: parent
-					acceptedButtons: Qt.LeftButton
-					onClicked: parent.forceActiveFocus();
-					onWheel: { }
-				}
-
 				onTermGetFocus: highlighter.focus()
 				onTermLostFocus: highlighter.unfocus()
+
+				MouseArea {
+					anchors.fill: parent
+					acceptedButtons: Qt.NoButton
+					onWheel: { }
+				}
 
 				Component.onCompleted: {
 					terminal.forceActiveFocus();
