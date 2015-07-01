@@ -9,12 +9,9 @@ Rectangle {
 
 	color: "#161616"
 
-	property string uiMode : "insert"
-
 	Flickable {
 		id: terminalListFlickable
 		boundsBehavior: Flickable.StopAtBounds
-		width: 600
 		anchors.fill: parent
 
 		Column {
@@ -74,19 +71,14 @@ Rectangle {
 	Action {
 		id: insertTerminalAction
 		shortcut: "i"
+		enabled: false
 		onTriggered: {
-			switch ( uiMode ) {
-				case "normal": {
-					uiMode = "insert";
-					terminalList.focusItem();
-					break;
-				}
-				default: {
-					break;
-				}
-			}
+			escapeTerminalAction.enabled = true;
+			insertTerminalAction.enabled = false;
+			nextTerminalAction.enabled   = false;
+			prevTerminalAction.enabled   = false;
 
-			console.log(uiMode);
+			terminalList.focusItem();
 		}
 	}
 
@@ -94,52 +86,28 @@ Rectangle {
 		id: escapeTerminalAction
 		shortcut: "Shift+ESC"
 		onTriggered: {
-			switch ( uiMode ) {
-				case "insert": {
-					uiMode = "normal";
-					root.forceActiveFocus();
-					terminalList.unfocusItem();
-					break;
-				}
-				default: {
-					break;
-				}
-			}
+			escapeTerminalAction.enabled = false;
+			insertTerminalAction.enabled = true;
+			nextTerminalAction.enabled   = true;
+			prevTerminalAction.enabled   = true;
 
-			console.log(uiMode);
+			root.forceActiveFocus();
+			terminalList.unfocusItem();
 		}
 	}
 
 	Action {
 		id: nextTerminalAction
 		shortcut: "j"
-		onTriggered: {
-			switch ( uiMode ) {
-				case "normal": {
-					terminalList.nextItem();
-					break;
-				}
-				default: {
-					break;
-				}
-			}
-		}
+		enabled: false
+		onTriggered: terminalList.nextItem()
 	}
 
 	Action {
 		id: prevTerminalAction
 		shortcut: "k"
-		onTriggered: {
-			switch ( uiMode ) {
-				case "normal": {
-					terminalList.prevItem();
-					break;
-				}
-				default: {
-					break;
-				}
-			}
-		}
+		enabled: false
+		onTriggered: terminalList.prevItem()
 	}
 
 	ScrollBar {
