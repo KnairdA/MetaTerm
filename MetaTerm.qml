@@ -9,10 +9,15 @@ Rectangle {
 
 	color: "#161616"
 
+	Component.onCompleted: terminalList.focusItem()
+
 	Flickable {
 		id: terminalListFlickable
-		boundsBehavior: Flickable.StopAtBounds
 		anchors.fill: parent
+
+		boundsBehavior: Flickable.StopAtBounds
+		contentHeight:  terminalList.height
+		contentWidth:   terminalList.width
 
 		Column {
 			id: terminalList
@@ -40,6 +45,8 @@ Rectangle {
 				if ( activeItem < (children.length - 1) ) {
 					children[  activeItem].deselect();
 					children[++activeItem].select();
+				} else {
+					insertTerminalAction.trigger();
 				}
 			}
 
@@ -63,9 +70,6 @@ Rectangle {
 				onExecuted: terminalList.createItem()
 			}
 		}
-
-		contentHeight: terminalList.height
-		contentWidth:  terminalList.width
 	}
 
 	Action {
@@ -114,6 +118,4 @@ Rectangle {
 		flickable: terminalListFlickable
 		handleSize: 10
 	}
-
-	Component.onCompleted: terminalList.focusItem()
 }
