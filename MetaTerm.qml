@@ -9,7 +9,7 @@ Rectangle {
 
 	color: "#161616"
 
-	Component.onCompleted: terminalList.focusItem()
+	Component.onCompleted: terminalList.focusCurrent()
 
 	Flickable {
 		id: terminalListFlickable
@@ -41,27 +41,53 @@ Rectangle {
 				}
 			}
 
-			function nextItem() {
+			function scrollTo(index) {
+				if ( terminalList.height >= terminalListFlickable.height ) {
+					var offset = children[index].y
+					           + (children[index].height       / 2)
+					           - (terminalListFlickable.height / 2);
+
+					var bound  = terminalList.height
+					           - terminalListFlickable.height;
+
+					if ( offset < 0 ) {
+						terminalListFlickable.contentY = 0;
+					} else if ( offset >= bound ) {
+						terminalListFlickable.contentY = bound;
+					} else {
+						terminalListFlickable.contentY = offset;
+					}
+				}
+			}
+
+			function selectItem(index) {
+				children[activeItem].deselect();
+				children[index     ].select();
+
+				activeItem = index;
+
+				scrollTo(index);
+			}
+
+			function selectNext() {
 				if ( activeItem < (children.length - 1) ) {
-					children[  activeItem].deselect();
-					children[++activeItem].select();
+					selectItem(activeItem + 1);
 				} else {
 					insertTerminalAction.trigger();
 				}
 			}
 
-			function prevItem() {
+			function selectPrev() {
 				if ( activeItem > 0 ) {
-					children[  activeItem].deselect();
-					children[--activeItem].select();
+					selectItem(activeItem - 1);
 				}
 			}
 
-			function focusItem() {
+			function focusCurrent() {
 				children[activeItem].forceActiveFocus();
 			}
 
-			function unfocusItem() {
+			function unfocusCurrent() {
 				children[activeItem].unfocus();
 			}
 
@@ -81,8 +107,10 @@ Rectangle {
 			insertTerminalAction.enabled = false;
 			nextTerminalAction.enabled   = false;
 			prevTerminalAction.enabled   = false;
+			lastTerminalAction.enabled   = false;
+			firstTerminalAction.enabled  = false;
 
-			terminalList.focusItem();
+			terminalList.focusCurrent();
 		}
 	}
 
@@ -94,9 +122,11 @@ Rectangle {
 			insertTerminalAction.enabled = true;
 			nextTerminalAction.enabled   = true;
 			prevTerminalAction.enabled   = true;
+			lastTerminalAction.enabled   = true;
+			firstTerminalAction.enabled  = true;
 
 			root.forceActiveFocus();
-			terminalList.unfocusItem();
+			terminalList.unfocusCurrent();
 		}
 	}
 
@@ -104,14 +134,28 @@ Rectangle {
 		id: nextTerminalAction
 		shortcut: "j"
 		enabled: false
-		onTriggered: terminalList.nextItem()
+		onTriggered: terminalList.selectNext()
 	}
 
 	Action {
 		id: prevTerminalAction
 		shortcut: "k"
 		enabled: false
-		onTriggered: terminalList.prevItem()
+		onTriggered: terminalList.selectPrev()
+	}
+
+	Action {
+		id: lastTerminalAction
+		shortcut: "Shift+G"
+		enabled: false
+		onTriggered: terminalList.selectItem(terminalList.children.length - 1)
+	}
+
+	Action {
+		id: firstTerminalAction
+		shortcut: "g"
+		enabled: false
+		onTriggered: terminalList.selectItem(0)
 	}
 
 	ScrollBar {
