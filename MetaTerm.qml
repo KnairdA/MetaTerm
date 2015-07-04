@@ -18,12 +18,15 @@ Rectangle {
 		boundsBehavior: Flickable.StopAtBounds
 		contentHeight:  terminalList.height
 		contentWidth:   terminalList.width
+		pixelAligned:   true
 
 		Column {
 			id: terminalList
 			spacing: 10
 
 			property int activeItem : 0
+
+			onHeightChanged: scrollTo(activeItem)
 
 			function createItem() {
 				var terminalItem = Qt.createComponent("TerminalItem.qml");
