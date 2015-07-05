@@ -1,8 +1,7 @@
 <RCC>
-    <qresource prefix="/">
-        <file>main.qml</file>
-        <file>TerminalItem.qml</file>
-        <file>EmbeddedTerminal.qml</file>
-        <file>ScrollBar.qml</file>
-    </qresource>
+	<qresource prefix="/">
+		<file>main.qml</file>
+		<file>TerminalItem.qml</file>
+		<file>EmbeddedTerminal.qml</file>
+	</qresource>
 </RCC>

@@ -29,9 +29,10 @@ ApplicationWindow {
 			onHeightChanged: scrollTo(activeItem)
 
 			function createItem() {
-                var terminalItem = Qt.createComponent("qrc:/TerminalItem.qml");
+				var terminalItem = Qt.createComponent("qrc:/TerminalItem.qml");
 				var instantiateTerminal = function() {
 					var instance = terminalItem.createObject(terminalList, {
+						"index": terminalList.children.length,
 						"width": terminalListFlickable.width
 					});
 					instance.onExecuted.connect(createItem);
@@ -159,10 +160,5 @@ ApplicationWindow {
 		shortcut: "g"
 		enabled: false
 		onTriggered: terminalList.selectItem(0)
-	}
-
-	ScrollBar {
-		flickable: terminalListFlickable
-		handleSize: 10
 	}
 }

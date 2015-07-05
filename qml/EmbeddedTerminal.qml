@@ -4,6 +4,7 @@ import QtQuick.Controls 1.2
 
 Item {
 	id: embeddedTerminal
+
 	property string program
 	property string workingDirectory
 	property int columns

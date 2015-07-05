@@ -4,6 +4,9 @@ import QtQuick.Layouts 1.1
 
 Item {
 	id: terminalItem
+
+	property int index : 0
+
 	signal executed
 
 	height: elementList.height
@@ -47,7 +50,7 @@ Item {
 			id: elementList
 
 			function createTerminal(program) {
-                var terminal = Qt.createComponent("qrc:/EmbeddedTerminal.qml");
+				var terminal = Qt.createComponent("qrc:/EmbeddedTerminal.qml");
 				var instantiateTerminal = function() {
 					terminal.createObject(elementList, {
 						"columns": 90,
@@ -62,7 +65,7 @@ Item {
 					instantiateTerminal();
 				} else {
 					terminal.statusChanged.connect(instantiateTerminal);
-                }
+				}
 			}
 
 			RowLayout {
@@ -93,10 +96,13 @@ Item {
 				TextInput {
 					id: command
 
-					font.pointSize: 18
+					font {
+						family: "Monospace"
+						pointSize: 18
+					}
 					color: "white"
-					selectedTextColor: "#161616"
 					selectionColor: "white"
+					selectedTextColor: "#161616"
 					selectByMouse: true
 					focus: true
 
@@ -111,6 +117,15 @@ Item {
 							highlighter.deselect();
 						}
 					}
+				}
+
+				Text {
+					text: terminalItem.index
+					font {
+						family: "Monospace"
+						pointSize: 12
+					}
+					color: "white"
 				}
 			}
 		}
