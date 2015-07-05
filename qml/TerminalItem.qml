@@ -47,7 +47,7 @@ Item {
 			id: elementList
 
 			function createTerminal(program) {
-				var terminal = Qt.createComponent("EmbeddedTerminal.qml");
+                var terminal = Qt.createComponent("qrc:/EmbeddedTerminal.qml");
 				var instantiateTerminal = function() {
 					terminal.createObject(elementList, {
 						"columns": 90,
@@ -58,11 +58,11 @@ Item {
 					});
 				}
 
-				if ( terminal.status == Component.Ready ) {
+				if ( terminal.status === Component.Ready ) {
 					instantiateTerminal();
 				} else {
 					terminal.statusChanged.connect(instantiateTerminal);
-				}
+                }
 			}
 
 			RowLayout {

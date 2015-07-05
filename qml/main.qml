@@ -1,11 +1,11 @@
 import QtQuick 2.0
-import QMLTermWidget 1.0
+import QtQuick.Window 2.0
 import QtQuick.Controls 1.2
 
-
-Rectangle {
+ApplicationWindow {
 	id: root
-	anchors.fill: parent
+
+	visible: true
 
 	color: "#161616"
 
@@ -29,7 +29,7 @@ Rectangle {
 			onHeightChanged: scrollTo(activeItem)
 
 			function createItem() {
-				var terminalItem = Qt.createComponent("TerminalItem.qml");
+                var terminalItem = Qt.createComponent("qrc:/TerminalItem.qml");
 				var instantiateTerminal = function() {
 					var instance = terminalItem.createObject(terminalList, {
 						"width": terminalListFlickable.width
@@ -37,7 +37,7 @@ Rectangle {
 					instance.onExecuted.connect(createItem);
 				}
 
-				if ( terminalItem.status == Component.Ready ) {
+				if ( terminalItem.status === Component.Ready ) {
 					instantiateTerminal();
 				} else {
 					terminalItem.statusChanged.connect(instantiateTerminal);
@@ -98,7 +98,7 @@ Rectangle {
 				width: terminalListFlickable.width
 				onExecuted: terminalList.createItem()
 			}
-		}
+        }
 	}
 
 	Action {
@@ -128,7 +128,7 @@ Rectangle {
 			lastTerminalAction.enabled   = true;
 			firstTerminalAction.enabled  = true;
 
-			root.forceActiveFocus();
+            terminalList.forceActiveFocus();
 			terminalList.unfocusCurrent();
 		}
 	}
