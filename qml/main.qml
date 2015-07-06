@@ -13,6 +13,7 @@ ApplicationWindow {
 
 	Flickable {
 		id: terminalListFlickable
+
 		anchors.fill: parent
 
 		boundsBehavior: Flickable.StopAtBounds
@@ -22,9 +23,10 @@ ApplicationWindow {
 
 		Column {
 			id: terminalList
-			spacing: 10
 
 			property int activeItem : 0
+
+			spacing: 10
 
 			onHeightChanged: scrollTo(activeItem)
 

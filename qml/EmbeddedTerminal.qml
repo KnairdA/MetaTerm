@@ -1,16 +1,15 @@
 import QtQuick 2.0
 import QMLTermWidget 1.0
-import QtQuick.Controls 1.2
 
 Item {
-	id: embeddedTerminal
+	id: item
 
 	property string program
 	property string workingDirectory
-	property int columns
-	property int lines
+	property int    columns
+	property int    lines
 
-	width: container.width
+	width:  container.width
 	height: container.height
 
 	function select()   { highlighter.select()   }
@@ -52,18 +51,18 @@ Item {
 				font.family: "Monospace"
 				font.pointSize: 8
 
-				width: fontMetrics.width * embeddedTerminal.columns
-				height: fontMetrics.height * embeddedTerminal.lines
+				width:  fontMetrics.width  * item.columns
+				height: fontMetrics.height * item.lines
 
 				session: QMLTermSession {
-					initialWorkingDirectory: embeddedTerminal.workingDirectory
+					initialWorkingDirectory: item.workingDirectory
 
 					shellProgram: {
-						return (embeddedTerminal.program).split(" ")[0];
+						return (item.program).split(" ")[0];
 					}
 
 					shellProgramArgs: {
-						var elements = (embeddedTerminal.program).split(" ");
+						var elements = (item.program).split(" ");
 						elements.shift();
 
 						return elements;
@@ -80,7 +79,7 @@ Item {
 				}
 
 				Component.onCompleted: {
-					terminal.forceActiveFocus();
+					forceActiveFocus();
 					session.startShellProgram();
 				}
 			}

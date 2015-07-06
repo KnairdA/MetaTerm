@@ -3,34 +3,35 @@ import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
 
 Item {
-	id: terminalItem
+	id: item
 
-	property int index : 0
+	property int              index    : 0
+	property EmbeddedTerminal terminal : null
 
 	signal executed
 
 	height: elementList.height
 
 	function select() {
-		if ( command.readOnly ) {
-			elementList.children[1].select();
-		} else {
+		if ( terminal == null ) {
 			highlighter.select();
+		} else {
+			terminal.select();
 		}
 	}
 
 	function deselect() {
-		if ( command.readOnly ) {
-			elementList.children[1].deselect();
-		} else {
+		if ( terminal == null ) {
 			highlighter.deselect();
+		} else {
+			terminal.deselect();
 		}
 	}
 
 	function forceActiveFocus() {
-		if ( command.readOnly ) {
-			scope.forceActiveFocus();
-		} else {
+		scope.forceActiveFocus();
+
+		if ( terminal == null ) {
 			scope.forceActiveFocus();
 			highlighter.select();
 			highlighter.focus();
@@ -38,7 +39,7 @@ Item {
 	}
 
 	function unfocus() {
-		if ( !command.readOnly ) {
+		if ( terminal == null ) {
 			highlighter.unfocus();
 		}
 	}
@@ -50,26 +51,26 @@ Item {
 			id: elementList
 
 			function createTerminal(program) {
-				var terminal = Qt.createComponent("qrc:/EmbeddedTerminal.qml");
+				var terminalComponent   = Qt.createComponent("qrc:/EmbeddedTerminal.qml");
 				var instantiateTerminal = function() {
-					terminal.createObject(elementList, {
-						"columns": 90,
-						"lines": 20,
-						"program": program,
-						"workingDirectory": "$HOME",
-						"focus": true
+					item.terminal = terminalComponent.createObject(elementList, {
+						"columns"          : 90,
+						"lines"            : 20,
+						"program"          : program,
+						"workingDirectory" : "$HOME",
+						"focus"            : true
 					});
 				}
 
-				if ( terminal.status === Component.Ready ) {
+				if ( terminalComponent.status === Component.Ready ) {
 					instantiateTerminal();
 				} else {
-					terminal.statusChanged.connect(instantiateTerminal);
+					terminalComponent.statusChanged.connect(instantiateTerminal);
 				}
 			}
 
 			RowLayout {
-				width: terminalItem.width
+				width: item.width
 
 				Rectangle {
 					id: highlighter
@@ -109,18 +110,19 @@ Item {
 					Layout.fillWidth: true
 
 					onAccepted: {
-						if ( !readOnly ) {
+						if ( item.terminal == null ) {
 							readOnly = true;
 							focus    = false;
+
 							elementList.createTerminal(text);
-							terminalItem.executed();
+							item.executed();
 							highlighter.deselect();
 						}
 					}
 				}
 
 				Text {
-					text: terminalItem.index
+					text: item.index
 					font {
 						family: "Monospace"
 						pointSize: 12
