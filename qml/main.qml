@@ -97,6 +97,10 @@ ApplicationWindow {
 				children[activeItem].unfocus();
 			}
 
+			function getCurrent() {
+				return children[activeItem];
+			}
+
 			TerminalItem {
 				width: terminalListFlickable.width
 				onExecuted: terminalList.createItem()
@@ -109,12 +113,16 @@ ApplicationWindow {
 		shortcut: "i"
 		enabled: false
 		onTriggered: {
-			escapeTerminalAction.enabled = true;
-			insertTerminalAction.enabled = false;
-			nextTerminalAction.enabled   = false;
-			prevTerminalAction.enabled   = false;
-			lastTerminalAction.enabled   = false;
-			firstTerminalAction.enabled  = false;
+			escapeTerminalAction.enabled   = true;
+			insertTerminalAction.enabled   = false;
+			nextTerminalAction.enabled     = false;
+			heightenTerminalAction.enabled = false;
+			shortenTerminalAction.enabled  = false;
+			widenTerminalAction.enabled    = false;
+			narrowTerminalAction.enabled   = false;
+			prevTerminalAction.enabled     = false;
+			lastTerminalAction.enabled     = false;
+			firstTerminalAction.enabled    = false;
 
 			terminalList.focusCurrent();
 		}
@@ -124,12 +132,16 @@ ApplicationWindow {
 		id: escapeTerminalAction
 		shortcut: "Shift+ESC"
 		onTriggered: {
-			escapeTerminalAction.enabled = false;
-			insertTerminalAction.enabled = true;
-			nextTerminalAction.enabled   = true;
-			prevTerminalAction.enabled   = true;
-			lastTerminalAction.enabled   = true;
-			firstTerminalAction.enabled  = true;
+			escapeTerminalAction.enabled   = false;
+			insertTerminalAction.enabled   = true;
+			nextTerminalAction.enabled     = true;
+			heightenTerminalAction.enabled = true;
+			shortenTerminalAction.enabled  = true;
+			widenTerminalAction.enabled    = true;
+			narrowTerminalAction.enabled   = true;
+			prevTerminalAction.enabled     = true;
+			lastTerminalAction.enabled     = true;
+			firstTerminalAction.enabled    = true;
 
             terminalList.forceActiveFocus();
 			terminalList.unfocusCurrent();
@@ -141,6 +153,58 @@ ApplicationWindow {
 		shortcut: "j"
 		enabled: false
 		onTriggered: terminalList.selectNext()
+	}
+
+	Action {
+		id: heightenTerminalAction
+		shortcut: "Shift+J"
+		enabled: false
+		onTriggered: {
+			var current = terminalList.getCurrent().terminal;
+
+			if ( current !== null ) {
+				current.lines += 1;
+			}
+		}
+	}
+
+	Action {
+		id: shortenTerminalAction
+		shortcut: "Shift+K"
+		enabled: false
+		onTriggered: {
+			var current = terminalList.getCurrent().terminal;
+
+			if ( current !== null ) {
+				current.lines -= 1;
+			}
+		}
+	}
+
+	Action {
+		id: widenTerminalAction
+		shortcut: "Shift+L"
+		enabled: false
+		onTriggered: {
+			var current = terminalList.getCurrent().terminal;
+
+			if ( current !== null ) {
+				current.columns += 1;
+			}
+		}
+	}
+
+	Action {
+		id: narrowTerminalAction
+		shortcut: "Shift+H"
+		enabled: false
+		onTriggered: {
+			var current = terminalList.getCurrent().terminal;
+
+			if ( current !== null ) {
+				current.columns -= 1;
+			}
+		}
 	}
 
 	Action {

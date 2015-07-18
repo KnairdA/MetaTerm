@@ -13,7 +13,7 @@ Item {
 	height: elementList.height
 
 	function select() {
-		if ( terminal == null ) {
+		if ( terminal === null ) {
 			highlighter.select();
 		} else {
 			terminal.select();
@@ -21,7 +21,7 @@ Item {
 	}
 
 	function deselect() {
-		if ( terminal == null ) {
+		if ( terminal === null ) {
 			highlighter.deselect();
 		} else {
 			terminal.deselect();
@@ -31,7 +31,7 @@ Item {
 	function forceActiveFocus() {
 		scope.forceActiveFocus();
 
-		if ( terminal == null ) {
+		if ( terminal === null ) {
 			scope.forceActiveFocus();
 			highlighter.select();
 			highlighter.focus();
@@ -39,7 +39,7 @@ Item {
 	}
 
 	function unfocus() {
-		if ( terminal == null ) {
+		if ( terminal === null ) {
 			highlighter.unfocus();
 		}
 	}
@@ -110,7 +110,7 @@ Item {
 					Layout.fillWidth: true
 
 					onAccepted: {
-						if ( item.terminal == null ) {
+						if ( item.terminal === null ) {
 							readOnly = true;
 							focus    = false;
 
