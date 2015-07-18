@@ -159,52 +159,28 @@ ApplicationWindow {
 		id: heightenTerminalAction
 		shortcut: "Shift+J"
 		enabled: false
-		onTriggered: {
-			var current = terminalList.getCurrent().terminal;
-
-			if ( current !== null ) {
-				current.lines += 1;
-			}
-		}
+		onTriggered: terminalList.getCurrent().heighten()
 	}
 
 	Action {
 		id: shortenTerminalAction
 		shortcut: "Shift+K"
 		enabled: false
-		onTriggered: {
-			var current = terminalList.getCurrent().terminal;
-
-			if ( current !== null ) {
-				current.lines -= 1;
-			}
-		}
+		onTriggered: terminalList.getCurrent().shorten()
 	}
 
 	Action {
 		id: widenTerminalAction
 		shortcut: "Shift+L"
 		enabled: false
-		onTriggered: {
-			var current = terminalList.getCurrent().terminal;
-
-			if ( current !== null ) {
-				current.columns += 1;
-			}
-		}
+		onTriggered: terminalList.getCurrent().widen()
 	}
 
 	Action {
 		id: narrowTerminalAction
 		shortcut: "Shift+H"
 		enabled: false
-		onTriggered: {
-			var current = terminalList.getCurrent().terminal;
-
-			if ( current !== null ) {
-				current.columns -= 1;
-			}
-		}
+		onTriggered: terminalList.getCurrent().narrow()
 	}
 
 	Action {

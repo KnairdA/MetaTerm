@@ -44,6 +44,30 @@ Item {
 		}
 	}
 
+	function widen() {
+		if ( terminal !== null ) {
+			terminal.columns += 1;
+		}
+	}
+
+	function narrow() {
+		if ( terminal !== null ) {
+			terminal.columns -= 1;
+		}
+	}
+
+	function heighten() {
+		if ( terminal !== null ) {
+			terminal.lines += 1;
+		}
+	}
+
+	function shorten() {
+		if ( terminal !== null ) {
+			terminal.lines -= 1;
+		}
+	}
+
 	FocusScope {
 		id: scope
 
