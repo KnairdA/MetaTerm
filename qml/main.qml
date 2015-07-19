@@ -18,13 +18,18 @@ ApplicationWindow {
 
 		boundsBehavior: Flickable.StopAtBounds
 		contentHeight:  terminalList.height
-		contentWidth:   terminalList.width
+		contentWidth:   parent.width
 		pixelAligned:   true
 
 		Column {
 			id: terminalList
 
 			property int activeItem : 0
+
+			anchors {
+				left:  parent.left
+				right: parent.right
+			}
 
 			spacing: 10
 
@@ -118,8 +123,6 @@ ApplicationWindow {
 			nextTerminalAction.enabled     = false;
 			heightenTerminalAction.enabled = false;
 			shortenTerminalAction.enabled  = false;
-			widenTerminalAction.enabled    = false;
-			narrowTerminalAction.enabled   = false;
 			prevTerminalAction.enabled     = false;
 			lastTerminalAction.enabled     = false;
 			firstTerminalAction.enabled    = false;
@@ -137,8 +140,6 @@ ApplicationWindow {
 			nextTerminalAction.enabled     = true;
 			heightenTerminalAction.enabled = true;
 			shortenTerminalAction.enabled  = true;
-			widenTerminalAction.enabled    = true;
-			narrowTerminalAction.enabled   = true;
 			prevTerminalAction.enabled     = true;
 			lastTerminalAction.enabled     = true;
 			firstTerminalAction.enabled    = true;
@@ -167,20 +168,6 @@ ApplicationWindow {
 		shortcut: "Shift+K"
 		enabled: false
 		onTriggered: terminalList.getCurrent().shorten()
-	}
-
-	Action {
-		id: widenTerminalAction
-		shortcut: "Shift+L"
-		enabled: false
-		onTriggered: terminalList.getCurrent().widen()
-	}
-
-	Action {
-		id: narrowTerminalAction
-		shortcut: "Shift+H"
-		enabled: false
-		onTriggered: terminalList.getCurrent().narrow()
 	}
 
 	Action {

@@ -1,28 +1,35 @@
 import QtQuick 2.0
 import QMLTermWidget 1.0
+import QtQuick.Layouts 1.1
 
 Item {
 	id: item
 
 	property string program
 	property string workingDirectory
-	property int    columns
 	property int    lines
 
-	width:  container.width
-	height: container.height
+	height: terminal.height
+	width:  parent.width
 
 	function select()   { highlighter.select()   }
 	function deselect() { highlighter.deselect() }
 
-	Row {
+	RowLayout {
 		id: container
+
+		anchors {
+			left:  parent.left
+			right: parent.right
+		}
+
+		spacing: 0
 
 		Rectangle {
 			id: highlighter
 
 			width: 10
-			height: terminal.height
+			Layout.fillHeight: true
 
 			color: "#909636"
 
@@ -40,8 +47,10 @@ Item {
 		}
 
 		Rectangle {
-			width: terminal.width
 			height: terminal.height
+
+			Layout.fillWidth: true
+			Layout.preferredHeight: terminal.height
 
 			color: "#ffffff"
 
@@ -51,7 +60,7 @@ Item {
 				font.family: "Monospace"
 				font.pointSize: 8
 
-				width:  fontMetrics.width  * item.columns
+				width:  parent.width
 				height: fontMetrics.height * item.lines
 
 				session: QMLTermSession {

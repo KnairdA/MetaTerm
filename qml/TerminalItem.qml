@@ -10,6 +10,11 @@ Item {
 
 	signal executed
 
+	anchors {
+		left: parent.left
+		right: parent.right
+	}
+
 	height: elementList.height
 
 	function select() {
@@ -44,18 +49,6 @@ Item {
 		}
 	}
 
-	function widen() {
-		if ( terminal !== null ) {
-			terminal.columns += 1;
-		}
-	}
-
-	function narrow() {
-		if ( terminal !== null ) {
-			terminal.columns -= 1;
-		}
-	}
-
 	function heighten() {
 		if ( terminal !== null ) {
 			terminal.lines += 1;
@@ -71,14 +64,23 @@ Item {
 	FocusScope {
 		id: scope
 
+		anchors {
+			left: parent.left
+			right: parent.right
+		}
+
 		Column {
 			id: elementList
+
+			anchors {
+				left: parent.left
+				right: parent.right
+			}
 
 			function createTerminal(program) {
 				var terminalComponent   = Qt.createComponent("qrc:/EmbeddedTerminal.qml");
 				var instantiateTerminal = function() {
 					item.terminal = terminalComponent.createObject(elementList, {
-						"columns"          : 90,
 						"lines"            : 20,
 						"program"          : program,
 						"workingDirectory" : "$HOME",
@@ -94,7 +96,10 @@ Item {
 			}
 
 			RowLayout {
-				width: item.width
+				anchors {
+					left: parent.left
+					right: parent.right
+				}
 
 				Rectangle {
 					id: highlighter
