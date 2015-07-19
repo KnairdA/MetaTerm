@@ -46,51 +46,47 @@ Item {
 			function unfocus()  { color   = "#909636" }
 		}
 
-		Rectangle {
-			height: terminal.height
+		QMLTermWidget {
+			id: terminal
+
+			font.family: "Monospace"
+			font.pointSize: 8
+
+			width:  parent.width
+			height: fontMetrics.height * item.lines
 
 			Layout.fillWidth: true
-			Layout.preferredHeight: terminal.height
+			Layout.preferredHeight: height
 
-			color: "#ffffff"
+			colorScheme: "cool-retro-term"
 
-			QMLTermWidget {
-				id: terminal
+			session: QMLTermSession {
+				initialWorkingDirectory: item.workingDirectory
 
-				font.family: "Monospace"
-				font.pointSize: 8
-
-				width:  parent.width
-				height: fontMetrics.height * item.lines
-
-				session: QMLTermSession {
-					initialWorkingDirectory: item.workingDirectory
-
-					shellProgram: {
-						return (item.program).split(" ")[0];
-					}
-
-					shellProgramArgs: {
-						var elements = (item.program).split(" ");
-						elements.shift();
-
-						return elements;
-					}
+				shellProgram: {
+					return (item.program).split(" ")[0];
 				}
 
-				onTermGetFocus: highlighter.focus()
-				onTermLostFocus: highlighter.unfocus()
+				shellProgramArgs: {
+					var elements = (item.program).split(" ");
+					elements.shift();
 
-				MouseArea {
-					anchors.fill: parent
-					acceptedButtons: Qt.NoButton
-					onWheel: { }
+					return elements;
 				}
+			}
 
-				Component.onCompleted: {
-					forceActiveFocus();
-					session.startShellProgram();
-				}
+			onTermGetFocus: highlighter.focus()
+			onTermLostFocus: highlighter.unfocus()
+
+			MouseArea {
+				anchors.fill: parent
+				acceptedButtons: Qt.NoButton
+				onWheel: { }
+			}
+
+			Component.onCompleted: {
+				forceActiveFocus();
+				session.startShellProgram();
 			}
 		}
 	}
