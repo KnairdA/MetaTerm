@@ -6,7 +6,6 @@ ApplicationWindow {
 	id: root
 
 	visible: true
-
 	color: "#161616"
 
 	Component.onCompleted: terminalList.focusCurrent()
@@ -84,7 +83,7 @@ ApplicationWindow {
 				if ( activeItem < (children.length - 1) ) {
 					selectItem(activeItem + 1);
 				} else {
-					insertTerminalAction.trigger();
+					state.enterInsertMode();
 				}
 			}
 
@@ -113,81 +112,9 @@ ApplicationWindow {
         }
 	}
 
-	Action {
-		id: insertTerminalAction
-		shortcut: "i"
-		enabled: false
-		onTriggered: {
-			escapeTerminalAction.enabled   = true;
-			insertTerminalAction.enabled   = false;
-			nextTerminalAction.enabled     = false;
-			heightenTerminalAction.enabled = false;
-			shortenTerminalAction.enabled  = false;
-			prevTerminalAction.enabled     = false;
-			lastTerminalAction.enabled     = false;
-			firstTerminalAction.enabled    = false;
+	StateHandler {
+		id: state
 
-			terminalList.focusCurrent();
-		}
-	}
-
-	Action {
-		id: escapeTerminalAction
-		shortcut: "Shift+ESC"
-		onTriggered: {
-			escapeTerminalAction.enabled   = false;
-			insertTerminalAction.enabled   = true;
-			nextTerminalAction.enabled     = true;
-			heightenTerminalAction.enabled = true;
-			shortenTerminalAction.enabled  = true;
-			prevTerminalAction.enabled     = true;
-			lastTerminalAction.enabled     = true;
-			firstTerminalAction.enabled    = true;
-
-            terminalList.forceActiveFocus();
-			terminalList.unfocusCurrent();
-		}
-	}
-
-	Action {
-		id: nextTerminalAction
-		shortcut: "j"
-		enabled: false
-		onTriggered: terminalList.selectNext()
-	}
-
-	Action {
-		id: heightenTerminalAction
-		shortcut: "Shift+J"
-		enabled: false
-		onTriggered: terminalList.getCurrent().heighten()
-	}
-
-	Action {
-		id: shortenTerminalAction
-		shortcut: "Shift+K"
-		enabled: false
-		onTriggered: terminalList.getCurrent().shorten()
-	}
-
-	Action {
-		id: prevTerminalAction
-		shortcut: "k"
-		enabled: false
-		onTriggered: terminalList.selectPrev()
-	}
-
-	Action {
-		id: lastTerminalAction
-		shortcut: "Shift+G"
-		enabled: false
-		onTriggered: terminalList.selectItem(terminalList.children.length - 1)
-	}
-
-	Action {
-		id: firstTerminalAction
-		shortcut: "g"
-		enabled: false
-		onTriggered: terminalList.selectItem(0)
+		terminalList: terminalList
 	}
 }
