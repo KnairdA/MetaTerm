@@ -11,7 +11,7 @@ Item {
 	signal executed
 
 	anchors {
-		left: parent.left
+		left:  parent.left
 		right: parent.right
 	}
 
@@ -57,7 +57,9 @@ Item {
 
 	function shorten() {
 		if ( terminal !== null ) {
-			terminal.lines -= 1;
+			if ( terminal.lines > 10 ) {
+				terminal.lines -= 1;
+			}
 		}
 	}
 
@@ -65,7 +67,7 @@ Item {
 		id: scope
 
 		anchors {
-			left: parent.left
+			left:  parent.left
 			right: parent.right
 		}
 
@@ -73,7 +75,7 @@ Item {
 			id: elementList
 
 			anchors {
-				left: parent.left
+				left:  parent.left
 				right: parent.right
 			}
 
@@ -97,7 +99,7 @@ Item {
 
 			RowLayout {
 				anchors {
-					left: parent.left
+					left:  parent.left
 					right: parent.right
 				}
 

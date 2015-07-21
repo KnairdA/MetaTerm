@@ -8,9 +8,10 @@ Item {
 	property string program
 	property string workingDirectory
 	property int    lines
+	property int    frameWidth : 10
 
 	height: terminal.height
-	width:  parent.width
+	width:  parent.width - frameWidth
 
 	function select()   { highlighter.select()   }
 	function deselect() { highlighter.deselect() }
@@ -28,7 +29,7 @@ Item {
 		Rectangle {
 			id: highlighter
 
-			width: 10
+			width: item.frameWidth
 			Layout.fillHeight: true
 
 			color: "#909636"
@@ -52,11 +53,8 @@ Item {
 			font.family: "Monospace"
 			font.pointSize: 8
 
-			width:  parent.width
-			height: fontMetrics.height * item.lines
-
 			Layout.fillWidth: true
-			Layout.preferredHeight: height
+			Layout.preferredHeight: fontMetrics.height * item.lines
 
 			colorScheme: "cool-retro-term"
 
