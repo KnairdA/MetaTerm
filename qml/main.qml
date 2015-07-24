@@ -8,7 +8,10 @@ ApplicationWindow {
 	visible: true
 	color: "#161616"
 
-	Component.onCompleted: terminalList.focusCurrent()
+	Component.onCompleted: {
+		terminalList.createItem();
+		terminalList.focusCurrent();
+	}
 
 	Flickable {
 		id: terminalListFlickable
@@ -24,6 +27,7 @@ ApplicationWindow {
 			id: terminalList
 
 			property int activeItem : 0
+			property int itemIndex  : 0
 
 			anchors {
 				left:  parent.left
@@ -38,10 +42,12 @@ ApplicationWindow {
 				var terminalItem = Qt.createComponent("qrc:/TerminalItem.qml");
 				var instantiateTerminal = function() {
 					var instance = terminalItem.createObject(terminalList, {
-						"index": terminalList.children.length,
+						"index": itemIndex,
 						"width": terminalListFlickable.width
 					});
 					instance.onExecuted.connect(createItem);
+
+					++itemIndex;
 				}
 
 				if ( terminalItem.status === Component.Ready ) {
@@ -105,9 +111,10 @@ ApplicationWindow {
 				return children[activeItem];
 			}
 
-			TerminalItem {
-				width: terminalListFlickable.width
-				onExecuted: terminalList.createItem()
+			function deleteCurrent() {
+				if ( children[activeItem].terminal != null ) {
+					children[activeItem].destroy();
+				}
 			}
         }
 	}
