@@ -38,6 +38,12 @@ ApplicationWindow {
 
 			onHeightChanged: scrollTo(activeItem)
 
+			function onItemExecuted(index) {
+				if ( index === (children.length - 1) ) {
+					createItem();
+				}
+			}
+
 			function createItem() {
 				var terminalItem = Qt.createComponent("qrc:/TerminalItem.qml");
 				var instantiateTerminal = function() {
@@ -45,7 +51,7 @@ ApplicationWindow {
 						"index": itemIndex,
 						"width": terminalListFlickable.width
 					});
-					instance.onExecuted.connect(createItem);
+					instance.onExecuted.connect(onItemExecuted);
 
 					++itemIndex;
 				}
@@ -109,12 +115,6 @@ ApplicationWindow {
 
 			function getCurrent() {
 				return children[activeItem];
-			}
-
-			function deleteCurrent() {
-				if ( children[activeItem].terminal != null ) {
-					children[activeItem].destroy();
-				}
 			}
         }
 	}

@@ -8,7 +8,7 @@ Item {
 	property int              index    : 0
 	property EmbeddedTerminal terminal : null
 
-	signal executed
+	signal executed (int index)
 
 	anchors {
 		left:  parent.left
@@ -60,6 +60,19 @@ Item {
 			if ( terminal.lines > 10 ) {
 				terminal.lines -= 1;
 			}
+		}
+	}
+
+	function reset() {
+		if ( terminal !== null ) {
+			terminal.destroy();
+
+			terminal         = null;
+			command.readOnly = false;
+			command.focus    = true;
+
+			unfocus();
+			select();
 		}
 	}
 
@@ -146,7 +159,7 @@ Item {
 							focus    = false;
 
 							elementList.createTerminal(text);
-							item.executed();
+							item.executed(item.index);
 							highlighter.deselect();
 						}
 					}

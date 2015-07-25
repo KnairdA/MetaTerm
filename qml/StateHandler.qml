@@ -24,7 +24,7 @@ Item {
 			PropertyChanges { target: prevTerminalAction;     enabled: true  }
 			PropertyChanges { target: lastTerminalAction;     enabled: true  }
 			PropertyChanges { target: firstTerminalAction;    enabled: true  }
-			PropertyChanges { target: deleteTerminalAction;   enabled: true  }
+			PropertyChanges { target: resetTerminalAction;    enabled: true  }
 		},
 		State {
 			name: "INSERT"
@@ -37,7 +37,7 @@ Item {
 			PropertyChanges { target: prevTerminalAction;     enabled: false }
 			PropertyChanges { target: lastTerminalAction;     enabled: false }
 			PropertyChanges { target: firstTerminalAction;    enabled: false }
-			PropertyChanges { target: deleteTerminalAction;   enabled: false }
+			PropertyChanges { target: resetTerminalAction;    enabled: false }
 		}
 	]
 
@@ -99,8 +99,8 @@ Item {
 	}
 
 	Action {
-		id: deleteTerminalAction
+		id: resetTerminalAction
 		shortcut: "d"
-		onTriggered: terminalList.deleteCurrent()
+		onTriggered: terminalList.getCurrent().reset()
 	}
 }
