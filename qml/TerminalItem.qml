@@ -116,26 +116,11 @@ Item {
 					right: parent.right
 				}
 
-				Rectangle {
+				Highlighter {
 					id: highlighter
 
 					width: 10
 					height: command.height
-					opacity: 0
-
-					color: "#909636"
-
-					Behavior on opacity {
-						NumberAnimation {
-							duration: 300
-							easing.type: Easing.OutCubic
-						}
-					}
-
-					function select()   { opacity = 1         }
-					function deselect() { opacity = 0         }
-					function focus()    { color   = "#352F6A" }
-					function unfocus()  { color   = "#909636" }
 				}
 
 				TextInput {

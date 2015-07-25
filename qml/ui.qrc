@@ -4,5 +4,6 @@
 		<file>StateHandler.qml</file>
 		<file>TerminalItem.qml</file>
 		<file>EmbeddedTerminal.qml</file>
+		<file>Highlighter.qml</file>
 	</qresource>
 </RCC>

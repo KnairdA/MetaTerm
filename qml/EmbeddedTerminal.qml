@@ -26,25 +26,11 @@ Item {
 
 		spacing: 0
 
-		Rectangle {
+		Highlighter {
 			id: highlighter
 
 			width: item.frameWidth
 			Layout.fillHeight: true
-
-			color: "#909636"
-
-			Behavior on opacity {
-				NumberAnimation {
-					duration: 300
-					easing.type: Easing.OutCubic
-				}
-			}
-
-			function select()   { opacity = 1         }
-			function deselect() { opacity = 0         }
-			function focus()    { color   = "#352F6A" }
-			function unfocus()  { color   = "#909636" }
 		}
 
 		QMLTermWidget {
@@ -73,7 +59,7 @@ Item {
 				}
 			}
 
-			onTermGetFocus: highlighter.focus()
+			onTermGetFocus:  highlighter.focus()
 			onTermLostFocus: highlighter.unfocus()
 
 			MouseArea {
@@ -84,6 +70,7 @@ Item {
 
 			Component.onCompleted: {
 				forceActiveFocus();
+				highlighter.select();
 				session.startShellProgram();
 			}
 		}
