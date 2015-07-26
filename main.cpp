@@ -1,19 +1,19 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 
-int main(int argc, char *argv[])
-{
-	QApplication app(argc, argv);
-	QQmlApplicationEngine engine;
+int main(int argc, char *argv[]) {
+	QApplication application(argc, argv);
+	application.setOrganizationName("akr");
+	application.setApplicationName("MetaTerm");
 
-	engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+	QQmlApplicationEngine engine(QUrl(QStringLiteral("qrc:/main.qml")));
 
 	QObject::connect(
 		static_cast<QObject*>(&engine),
 		SIGNAL(quit()),
-		static_cast<QObject*>(&app),
+		static_cast<QObject*>(&application),
 		SLOT(quit())
 	);
 
-	return app.exec();
+	return application.exec();
 }

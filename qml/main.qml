@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Window 2.0
 import QtQuick.Controls 1.2
+import Qt.labs.settings 1.0
 
 ApplicationWindow {
 	id: root
@@ -11,6 +12,12 @@ ApplicationWindow {
 	Component.onCompleted: {
 		terminalList.createItem();
 		terminalList.focusCurrent();
+	}
+
+	Settings {
+		category: "window"
+
+		property alias color : root.color
 	}
 
 	Flickable {

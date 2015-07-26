@@ -1,17 +1,28 @@
 import QtQuick 2.0
 import QMLTermWidget 1.0
 import QtQuick.Layouts 1.1
+import Qt.labs.settings 1.0
 
 Item {
 	id: item
 
 	property string program
 	property string workingDirectory
-	property int    lines
+
+	property int    lines      : 20
 	property int    frameWidth : 10
 
 	height: terminal.height
 	width:  parent.width - frameWidth
+
+	Settings {
+		category: "terminal"
+
+		property alias frameWidth  : item.frameWidth
+		property alias colorScheme : terminal.colorScheme
+		property alias fontFamily  : terminal.font.family
+		property alias fontSize    : terminal.font.pointSize
+	}
 
 	function select()   { highlighter.select()   }
 	function deselect() { highlighter.deselect() }
@@ -36,10 +47,12 @@ Item {
 		QMLTermWidget {
 			id: terminal
 
-			font.family: "Monospace"
-			font.pointSize: 8
+			font {
+				family: "Monospace"
+				pointSize: 8
+			}
 
-			Layout.fillWidth: true
+			Layout.fillWidth:       true
 			Layout.preferredHeight: fontMetrics.height * item.lines
 
 			colorScheme: "cool-retro-term"

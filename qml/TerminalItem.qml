@@ -96,7 +96,6 @@ Item {
 				var terminalComponent   = Qt.createComponent("qrc:/EmbeddedTerminal.qml");
 				var instantiateTerminal = function() {
 					item.terminal = terminalComponent.createObject(elementList, {
-						"lines"            : 20,
 						"program"          : program,
 						"workingDirectory" : "$HOME",
 						"focus"            : true
