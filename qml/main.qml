@@ -7,17 +7,19 @@ ApplicationWindow {
 	id: root
 
 	visible: true
-	color: "#161616"
+
+	Settings {
+		id: settings
+		category: "window"
+
+		property color background : "#161616"
+	}
+
+	color: settings.background
 
 	Component.onCompleted: {
 		terminalList.createItem();
 		terminalList.focusCurrent();
-	}
-
-	Settings {
-		category: "window"
-
-		property alias color : root.color
 	}
 
 	Flickable {

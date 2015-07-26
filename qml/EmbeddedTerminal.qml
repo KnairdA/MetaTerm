@@ -9,20 +9,21 @@ Item {
 	property string program
 	property string workingDirectory
 
-	property int    lines      : 20
-	property int    frameWidth : 10
-
-	height: terminal.height
-	width:  parent.width - frameWidth
-
 	Settings {
+		id: settings
 		category: "terminal"
 
-		property alias frameWidth  : item.frameWidth
-		property alias colorScheme : terminal.colorScheme
-		property alias fontFamily  : terminal.font.family
-		property alias fontSize    : terminal.font.pointSize
+		property int    initialLines : 20
+		property int    frameWidth   : 10
+		property int    fontSize     : 8
+		property string fontFamily   : "Monospace"
+		property string colorScheme  : "cool-retro-term"
 	}
+
+	property int lines : settings.initialLines
+
+	height: terminal.height
+	width:  parent.width - settings.frameWidth
 
 	function select()   { highlighter.select()   }
 	function deselect() { highlighter.deselect() }
@@ -40,7 +41,7 @@ Item {
 		Highlighter {
 			id: highlighter
 
-			width: item.frameWidth
+			width: settings.frameWidth
 			Layout.fillHeight: true
 		}
 
@@ -48,14 +49,14 @@ Item {
 			id: terminal
 
 			font {
-				family: "Monospace"
-				pointSize: 8
+				family:    settings.fontFamily
+				pointSize: settings.fontSize
 			}
 
 			Layout.fillWidth:       true
 			Layout.preferredHeight: fontMetrics.height * item.lines
 
-			colorScheme: "cool-retro-term"
+			colorScheme: settings.colorScheme
 
 			session: QMLTermSession {
 				initialWorkingDirectory: item.workingDirectory

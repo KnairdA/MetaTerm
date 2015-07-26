@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
+import Qt.labs.settings 1.0
 
 Item {
 	id: item
@@ -9,6 +10,15 @@ Item {
 	property EmbeddedTerminal terminal : null
 
 	signal executed (int index)
+
+	Settings {
+		id: settings
+		category: "item"
+
+		property int    fontSize   : 18
+		property string fontFamily : "Monospace"
+		property color  fontColor  : "white"
+	}
 
 	anchors {
 		left:  parent.left
@@ -126,15 +136,16 @@ Item {
 					id: command
 
 					font {
-						family: "Monospace"
-						pointSize: 18
+						family:    settings.fontFamily
+						pointSize: settings.fontSize
 					}
-					color: "white"
-					selectionColor: "white"
-					selectedTextColor: "#161616"
-					selectByMouse: true
-					focus: true
 
+					color:             settings.fontColor
+					selectionColor:    settings.fontColor
+					selectedTextColor: "#161616"
+
+					selectByMouse:    true
+					focus:            true
 					Layout.fillWidth: true
 
 					onAccepted: {
@@ -152,10 +163,10 @@ Item {
 				Text {
 					text: item.index
 					font {
-						family: "Monospace"
+						family: settings.fontFamily
 						pointSize: 12
 					}
-					color: "white"
+					color: settings.fontColor
 				}
 			}
 		}
