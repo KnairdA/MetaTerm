@@ -1,10 +1,26 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
+import Qt.labs.settings 1.0
 
 Item {
 	id: item
 
 	property Item terminalList : null
+
+	Settings {
+		id: settings
+		category: "keybinding"
+
+		property string insertMode   : "i"
+		property string normalMode   : "Shift+ESC"
+		property string nextItem     : "j"
+		property string prevItem     : "k"
+		property string firstItem    : "g"
+		property string resetItem    : "d"
+		property string lastItem     : "Shift+G"
+		property string heightenItem : "Shift+J"
+		property string shortenItem  : "Shift+K"
+	}
 
 	state: "INSERT"
 
@@ -43,7 +59,7 @@ Item {
 
 	Action {
 		id: insertTerminalAction
-		shortcut: "i"
+		shortcut: settings.insertMode
 		onTriggered: {
 			item.state = "INSERT";
 
@@ -53,7 +69,7 @@ Item {
 
 	Action {
 		id: escapeTerminalAction
-		shortcut: "Shift+ESC"
+		shortcut: settings.normalMode
 		onTriggered: {
 			item.state = "NORMAL";
 
@@ -64,43 +80,43 @@ Item {
 
 	Action {
 		id: nextTerminalAction
-		shortcut: "j"
+		shortcut: settings.nextItem
 		onTriggered: terminalList.selectNext()
 	}
 
 	Action {
 		id: heightenTerminalAction
-		shortcut: "Shift+J"
+		shortcut: settings.heightenItem
 		onTriggered: terminalList.getCurrent().heighten()
 	}
 
 	Action {
 		id: shortenTerminalAction
-		shortcut: "Shift+K"
+		shortcut: settings.shortenItem
 		onTriggered: terminalList.getCurrent().shorten()
 	}
 
 	Action {
 		id: prevTerminalAction
-		shortcut: "k"
+		shortcut: settings.prevItem
 		onTriggered: terminalList.selectPrev()
 	}
 
 	Action {
 		id: lastTerminalAction
-		shortcut: "Shift+G"
+		shortcut: settings.lastItem
 		onTriggered: terminalList.selectItem(terminalList.children.length - 1)
 	}
 
 	Action {
 		id: firstTerminalAction
-		shortcut: "g"
+		shortcut: settings.firstItem
 		onTriggered: terminalList.selectItem(0)
 	}
 
 	Action {
 		id: resetTerminalAction
-		shortcut: "d"
+		shortcut: settings.resetItem
 		onTriggered: terminalList.getCurrent().reset()
 	}
 }
