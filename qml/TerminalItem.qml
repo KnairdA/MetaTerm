@@ -69,6 +69,8 @@ Item {
 		if ( terminal !== null ) {
 			if ( terminal.lines > 10 ) {
 				terminal.lines -= 1;
+			} else {
+				terminal.displayOverlay();
 			}
 		}
 	}

@@ -27,8 +27,9 @@ Item {
 	height: terminal.height
 	width:  parent.width - settings.frameWidth
 
-	function select()   { highlighter.select()   }
-	function deselect() { highlighter.deselect() }
+	function select()         { highlighter.select()     }
+	function deselect()       { highlighter.deselect()   }
+	function displayOverlay() { overlay.displayBriefly() }
 
 	RowLayout {
 		id: container
@@ -116,7 +117,7 @@ Item {
 						property: "opacity"
 
 						easing.type: Easing.InSine
-						duration: 500
+						duration: 300
 						from:     0.8
 						to:       0
 					}
