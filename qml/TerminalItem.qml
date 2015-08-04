@@ -161,12 +161,13 @@ Item {
 				}
 
 				Text {
-					text: item.index
 					font {
 						family: settings.fontFamily
 						pointSize: 12
 					}
 					color: settings.fontColor
+
+					text: item.index
 				}
 			}
 		}

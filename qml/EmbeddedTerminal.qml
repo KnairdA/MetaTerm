@@ -13,11 +13,13 @@ Item {
 		id: settings
 		category: "terminal"
 
-		property int    initialLines : 20
-		property int    frameWidth   : 10
-		property int    fontSize     : 8
-		property string fontFamily   : "Monospace"
-		property string colorScheme  : "cool-retro-term"
+		property int    initialLines      : 20
+		property int    frameWidth        : 10
+		property int    fontSize          : 8
+		property string fontFamily        : "Monospace"
+		property string colorScheme       : "cool-retro-term"
+		property color  overlayBackground : "black"
+		property color  overlayFontColor  : "white"
 	}
 
 	property int lines : settings.initialLines
@@ -73,6 +75,12 @@ Item {
 				}
 			}
 
+			Component.onCompleted: {
+				forceActiveFocus();
+				highlighter.select();
+				session.startShellProgram();
+			}
+
 			onTermGetFocus:  highlighter.focus()
 			onTermLostFocus: highlighter.unfocus()
 			onHeightChanged: overlay.displayBriefly();
@@ -87,17 +95,18 @@ Item {
 
 				anchors.fill: parent
 				opacity: 0
-				color: "black"
+				color: settings.overlayBackground
 
 				NumberAnimation {
 					id: animation
-					target: overlay
+
+					target:   overlay
 					property: "opacity"
 
 					easing.type: Easing.InSine
 					duration: 500
-					from: 0.8
-					to: 0
+					from:     0.8
+					to:       0
 				}
 
 				Text {
@@ -106,17 +115,17 @@ Item {
 						verticalCenter:   overlay.verticalCenter
 					}
 
+					font {
+						family: settings.fontFamily
+						pointSize: 16
+					}
+					color: settings.overlayFontColor
+
 					text: {
 						return item.lines
 						     + 'x'
 						     + Math.floor(terminal.width / terminal.fontMetrics.width);
 					}
-
-					font {
-						family: settings.fontFamily
-						pointSize: 16
-					}
-					color: "white"
 				}
 			}
 
@@ -124,12 +133,6 @@ Item {
 				anchors.fill: parent
 				acceptedButtons: Qt.NoButton
 				onWheel: { }
-			}
-
-			Component.onCompleted: {
-				forceActiveFocus();
-				highlighter.select();
-				session.startShellProgram();
 			}
 		}
 	}
