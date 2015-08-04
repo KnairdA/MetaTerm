@@ -79,6 +79,7 @@ Item {
 				forceActiveFocus();
 				highlighter.select();
 				session.startShellProgram();
+				overlay.enabled = true;
 			}
 
 			onTermGetFocus:  highlighter.focus()
@@ -89,24 +90,36 @@ Item {
 			Rectangle {
 				id: overlay
 
+				property bool enabled : false
+
 				function displayBriefly() {
-					animation.restart();
+					if ( enabled ) { animation.restart() }
 				}
 
 				anchors.fill: parent
 				opacity: 0
 				color: settings.overlayBackground
 
-				NumberAnimation {
+				SequentialAnimation {
 					id: animation
 
-					target:   overlay
-					property: "opacity"
+					ScriptAction {
+						script: overlay.opacity = 0.8
+					}
 
-					easing.type: Easing.InSine
-					duration: 500
-					from:     0.8
-					to:       0
+					PauseAnimation {
+						duration: 500
+					}
+
+					NumberAnimation {
+						target:   overlay
+						property: "opacity"
+
+						easing.type: Easing.InSine
+						duration: 500
+						from:     0.8
+						to:       0
+					}
 				}
 
 				Text {
