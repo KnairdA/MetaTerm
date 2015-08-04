@@ -75,6 +75,62 @@ Item {
 
 			onTermGetFocus:  highlighter.focus()
 			onTermLostFocus: highlighter.unfocus()
+			onHeightChanged: overlay.displayBriefly();
+
+			Rectangle {
+				id: overlay
+
+				function displayBriefly() {
+					animation.running = true;
+				}
+
+				anchors.fill: parent
+				opacity: 0
+				color: "black"
+
+				Text {
+					anchors {
+						horizontalCenter: overlay.horizontalCenter
+						verticalCenter:   overlay.verticalCenter
+					}
+
+					text: {
+						return item.lines
+						     + 'x'
+						     + Math.floor(terminal.width / terminal.fontMetrics.width);
+					}
+
+					font {
+						family: settings.fontFamily
+						pointSize: 16
+					}
+					color: "white"
+				}
+
+				SequentialAnimation {
+					id: animation
+
+					NumberAnimation {
+						target: overlay
+						property: "opacity"
+
+						easing.type: Easing.InSine
+						duration: 500
+						from: 0
+						to: 0.8
+					}
+
+					NumberAnimation {
+						target: overlay
+						property: "opacity"
+
+						easing.type: Easing.InSine
+						duration: 500
+						from: 0.8
+						to: 0
+					}
+				}
+			}
 
 			MouseArea {
 				anchors.fill: parent
