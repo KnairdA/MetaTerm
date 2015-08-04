@@ -76,17 +76,29 @@ Item {
 			onTermGetFocus:  highlighter.focus()
 			onTermLostFocus: highlighter.unfocus()
 			onHeightChanged: overlay.displayBriefly();
+			onWidthChanged:  overlay.displayBriefly();
 
 			Rectangle {
 				id: overlay
 
 				function displayBriefly() {
-					animation.running = true;
+					animation.restart();
 				}
 
 				anchors.fill: parent
 				opacity: 0
 				color: "black"
+
+				NumberAnimation {
+					id: animation
+					target: overlay
+					property: "opacity"
+
+					easing.type: Easing.InSine
+					duration: 500
+					from: 0.8
+					to: 0
+				}
 
 				Text {
 					anchors {
@@ -105,30 +117,6 @@ Item {
 						pointSize: 16
 					}
 					color: "white"
-				}
-
-				SequentialAnimation {
-					id: animation
-
-					NumberAnimation {
-						target: overlay
-						property: "opacity"
-
-						easing.type: Easing.InSine
-						duration: 500
-						from: 0
-						to: 0.8
-					}
-
-					NumberAnimation {
-						target: overlay
-						property: "opacity"
-
-						easing.type: Easing.InSine
-						duration: 500
-						from: 0.8
-						to: 0
-					}
 				}
 			}
 
