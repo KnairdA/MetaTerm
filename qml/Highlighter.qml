@@ -1,10 +1,19 @@
 import QtQuick 2.0
+import Qt.labs.settings 1.0
 
 Item {
-	function select()   { bar.opacity = 1         }
-	function deselect() { bar.opacity = 0         }
-	function focus()    { bar.color   = "#352F6A" }
-	function unfocus()  { bar.color   = "#909636" }
+	Settings {
+		id: settings
+		category: "highlighter"
+
+		property color defaultColor : "#909636"
+		property color focusColor   : "#352F6A"
+	}
+
+	function select()   { bar.opacity = 1                     }
+	function deselect() { bar.opacity = 0                     }
+	function focus()    { bar.color   = settings.focusColor   }
+	function unfocus()  { bar.color   = settings.defaultColor }
 
 	Rectangle {
 		id: bar
@@ -12,7 +21,7 @@ Item {
 		anchors.fill: parent
 
 		opacity: 0
-		color: "#909636"
+		color: settings.defaultColor
 
 		Behavior on opacity {
 			NumberAnimation {

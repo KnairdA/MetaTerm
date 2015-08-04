@@ -116,8 +116,8 @@ Item {
 					}
 
 					font {
-						family: settings.fontFamily
-						pointSize: 16
+						family:    settings.fontFamily
+						pointSize: settings.fontSize * 2
 					}
 					color: settings.overlayFontColor
 
