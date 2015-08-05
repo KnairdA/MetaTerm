@@ -165,7 +165,7 @@ Item {
 				Text {
 					font {
 						family: settings.fontFamily
-						pointSize: 12
+						pointSize: settings.fontSize / 1.5
 					}
 					color: settings.fontColor
 
