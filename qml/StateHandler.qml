@@ -25,15 +25,15 @@ Item {
 	state: "INSERT"
 
 	function enterInsertMode() {
-		insertTerminalAction.trigger();
+		enterInsertAction.trigger();
 	}
 
 	states: [
 		State {
 			name: "NORMAL"
 
-			PropertyChanges { target: escapeTerminalAction;   enabled: false }
-			PropertyChanges { target: insertTerminalAction;   enabled: true  }
+			PropertyChanges { target: escapeInsertAction;     enabled: false }
+			PropertyChanges { target: enterInsertAction;      enabled: true  }
 			PropertyChanges { target: nextTerminalAction;     enabled: true  }
 			PropertyChanges { target: heightenTerminalAction; enabled: true  }
 			PropertyChanges { target: shortenTerminalAction;  enabled: true  }
@@ -45,8 +45,8 @@ Item {
 		State {
 			name: "INSERT"
 
-			PropertyChanges { target: escapeTerminalAction;   enabled: true  }
-			PropertyChanges { target: insertTerminalAction;   enabled: false }
+			PropertyChanges { target: escapeInsertAction;     enabled: true  }
+			PropertyChanges { target: enterInsertAction;      enabled: false }
 			PropertyChanges { target: nextTerminalAction;     enabled: false }
 			PropertyChanges { target: heightenTerminalAction; enabled: false }
 			PropertyChanges { target: shortenTerminalAction;  enabled: false }
@@ -58,7 +58,7 @@ Item {
 	]
 
 	Action {
-		id: insertTerminalAction
+		id: enterInsertAction
 		shortcut: settings.insertMode
 		onTriggered: {
 			item.state = "INSERT";
@@ -68,7 +68,7 @@ Item {
 	}
 
 	Action {
-		id: escapeTerminalAction
+		id: escapeInsertAction
 		shortcut: settings.normalMode
 		onTriggered: {
 			item.state = "NORMAL";
