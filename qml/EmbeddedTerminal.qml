@@ -69,7 +69,7 @@ Item {
 				}
 
 				shellProgramArgs: {
-					var elements = (item.program).split(" ");
+					const elements = (item.program).split(" ");
 					elements.shift();
 
 					return elements;

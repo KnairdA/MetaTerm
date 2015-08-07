@@ -5,7 +5,8 @@ import Qt.labs.settings 1.0
 Item {
 	id: item
 
-	property Item terminalList : null
+	property Item         terminalList : null
+	property CommandInput commandInput : null
 
 	Settings {
 		id: settings
@@ -13,6 +14,7 @@ Item {
 
 		property string insertMode   : "i"
 		property string normalMode   : "Shift+ESC"
+		property string commandMode  : ":"
 		property string nextItem     : "j"
 		property string prevItem     : "k"
 		property string firstItem    : "g"
@@ -32,8 +34,9 @@ Item {
 		State {
 			name: "NORMAL"
 
-			PropertyChanges { target: escapeInsertAction;     enabled: false }
+			PropertyChanges { target: enterNormalAction;      enabled: false }
 			PropertyChanges { target: enterInsertAction;      enabled: true  }
+			PropertyChanges { target: enterCommandAction;     enabled: true  }
 			PropertyChanges { target: nextTerminalAction;     enabled: true  }
 			PropertyChanges { target: heightenTerminalAction; enabled: true  }
 			PropertyChanges { target: shortenTerminalAction;  enabled: true  }
@@ -45,8 +48,23 @@ Item {
 		State {
 			name: "INSERT"
 
-			PropertyChanges { target: escapeInsertAction;     enabled: true  }
+			PropertyChanges { target: enterNormalAction;      enabled: true  }
 			PropertyChanges { target: enterInsertAction;      enabled: false }
+			PropertyChanges { target: enterCommandAction;     enabled: false }
+			PropertyChanges { target: nextTerminalAction;     enabled: false }
+			PropertyChanges { target: heightenTerminalAction; enabled: false }
+			PropertyChanges { target: shortenTerminalAction;  enabled: false }
+			PropertyChanges { target: prevTerminalAction;     enabled: false }
+			PropertyChanges { target: lastTerminalAction;     enabled: false }
+			PropertyChanges { target: firstTerminalAction;    enabled: false }
+			PropertyChanges { target: resetTerminalAction;    enabled: false }
+		},
+		State {
+			name: "COMMAND"
+
+			PropertyChanges { target: enterNormalAction;      enabled: true  }
+			PropertyChanges { target: enterInsertAction;      enabled: false }
+			PropertyChanges { target: enterCommandAction;     enabled: false }
 			PropertyChanges { target: nextTerminalAction;     enabled: false }
 			PropertyChanges { target: heightenTerminalAction; enabled: false }
 			PropertyChanges { target: shortenTerminalAction;  enabled: false }
@@ -56,6 +74,18 @@ Item {
 			PropertyChanges { target: resetTerminalAction;    enabled: false }
 		}
 	]
+
+	Action {
+		id: enterNormalAction
+		shortcut: settings.normalMode
+		onTriggered: {
+			item.state = "NORMAL";
+
+            terminalList.forceActiveFocus();
+			terminalList.unfocusCurrent();
+			commandInput.unfocus();
+		}
+	}
 
 	Action {
 		id: enterInsertAction
@@ -68,13 +98,12 @@ Item {
 	}
 
 	Action {
-		id: escapeInsertAction
-		shortcut: settings.normalMode
+		id: enterCommandAction
+		shortcut: settings.commandMode
 		onTriggered: {
-			item.state = "NORMAL";
+			item.state = "COMMAND";
 
-            terminalList.forceActiveFocus();
-			terminalList.unfocusCurrent();
+			commandInput.focus();
 		}
 	}
 

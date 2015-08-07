@@ -5,5 +5,6 @@
 		<file>TerminalItem.qml</file>
 		<file>EmbeddedTerminal.qml</file>
 		<file>Highlighter.qml</file>
+		<file>CommandInput.qml</file>
 	</qresource>
 </RCC>
