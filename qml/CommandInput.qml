@@ -2,6 +2,8 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import Qt.labs.settings 1.0
 
+import "commands.js" as Commands
+
 Item {
 	id: item
 
@@ -17,8 +19,9 @@ Item {
 		property color  fontColor  : "white"
 	}
 
-	function focus() {
-		visible = true;
+	function focus(prefix) {
+		visible      = true;
+		command.text = prefix;
 		command.forceActiveFocus();
 	}
 
@@ -41,9 +44,9 @@ Item {
 			color:             settings.fontColor
 			selectionColor:    settings.fontColor
 			selectedTextColor: settings.background
-			text: ":"
+			selectByMouse:     true
 
-			selectByMouse:    true
+			function reset() { text = '' }
 
 			onAccepted: {
 				const prefix = String(text).charAt(0);
@@ -51,11 +54,13 @@ Item {
 
 				switch ( prefix ) {
 					case ':': {
-						eval(cmd);
-						text = ':';
+						Commands.execute(cmd);
+						reset();
 						break;
 					}
-					default: { }
+					default: {
+						console.log('"' + prefix + '"' + " is not a command prefix");
+					}
 				}
 			}
 		}

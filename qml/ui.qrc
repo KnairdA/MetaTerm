@@ -7,5 +7,6 @@
 		<file>CommandInput.qml</file>
 		<file>TerminalList.qml</file>
 		<file>Highlighter.qml</file>
+		<file>commands.js</file>
 	</qresource>
 </RCC>

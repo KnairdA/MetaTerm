@@ -103,7 +103,7 @@ Item {
 		onTriggered: {
 			item.state = "COMMAND";
 
-			commandInput.focus();
+			commandInput.focus(shortcut);
 		}
 	}
 
