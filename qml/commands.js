@@ -17,3 +17,7 @@ function next() {
 function prev() {
 	terminalList.selectPrev();
 }
+
+function jump(index) {
+	terminalList.selectItem(index);
+}

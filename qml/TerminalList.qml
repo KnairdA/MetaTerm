@@ -58,7 +58,7 @@ Item {
 		children[activeItem].deselect();
 		children[index     ].select();
 
-		activeItem = index;
+		activeItem = typeof index === "number" ? index : parseInt(index);
 
 		scrollTo(index);
 	}
