@@ -7,6 +7,8 @@ import "commands.js" as Commands
 Item {
 	id: item
 
+	signal executed
+
 	visible: false
 
 	Settings {
@@ -62,6 +64,8 @@ Item {
 						console.log('"' + prefix + '"' + " is not a command prefix");
 					}
 				}
+
+				item.executed();
 			}
 		}
 	}

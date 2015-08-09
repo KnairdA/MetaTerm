@@ -30,6 +30,10 @@ Item {
 		enterInsertAction.trigger();
 	}
 
+	function enterNormalMode() {
+		enterNormalAction.trigger();
+	}
+
 	states: [
 		State {
 			name: "NORMAL"
