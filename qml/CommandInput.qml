@@ -61,7 +61,7 @@ Item {
 						break;
 					}
 					default: {
-						console.log('"' + prefix + '"' + " is not a command prefix");
+						console.log('"' + prefix + '"' + " is not a command prefix.");
 					}
 				}
 
