@@ -11,6 +11,8 @@ Item {
 
 	visible: false
 
+	Layout.preferredHeight: container.height
+
 	Settings {
 		id: settings
 		category: "command"
@@ -20,6 +22,8 @@ Item {
 		property string fontFamily : "Monospace"
 		property color  fontColor  : "white"
 	}
+
+	onVisibleChanged: container.reset()
 
 	function focus(prefix) {
 		visible      = true;
@@ -32,40 +36,83 @@ Item {
 	}
 
 	Rectangle {
-		anchors.fill: parent
+		anchors {
+			top:   parent.top
+			left:  parent.left
+			right: parent.right
+		}
+
+		height: container.height
+
 		color: settings.background
 
-		TextInput {
-			id: command
+		ColumnLayout {
+			id: container
 
-			font {
-				family:    settings.fontFamily
-				pointSize: settings.fontSize
+			function reset() {
+				command.text = '';
+				output.text  = '';
 			}
 
-			color:             settings.fontColor
-			selectionColor:    settings.fontColor
-			selectedTextColor: settings.background
-			selectByMouse:     true
+			TextInput {
+				id: command
 
-			function reset() { text = '' }
+				Layout.fillWidth: true
 
-			onAccepted: {
-				const prefix = String(text).charAt(0);
-				const cmd    = String(text).substring(1, String(text).length);
-
-				switch ( prefix ) {
-					case ':': {
-						Commands.execute(cmd);
-						reset();
-						break;
-					}
-					default: {
-						console.log('"' + prefix + '"' + " is not a command prefix.");
-					}
+				font {
+					family:    settings.fontFamily
+					pointSize: settings.fontSize
 				}
 
-				item.executed();
+				color:             settings.fontColor
+				selectionColor:    settings.fontColor
+				selectedTextColor: settings.background
+				selectByMouse:     true
+
+				onAccepted: {
+					const prefix = String(text).charAt(0);
+					const cmd    = String(text).substring(1, String(text).length);
+
+					switch ( prefix ) {
+						case ':': {
+							Commands.execute(output, cmd);
+							break;
+						}
+						default: {
+							output.log('"' + prefix + '"' + " is not a command prefix.");
+						}
+					}
+
+					if ( output.text === '' ) {
+						item.executed();
+					}
+				}
+			}
+
+			Text {
+				id: output
+
+				Layout.fillWidth:       true
+				Layout.preferredHeight: 0
+
+				font {
+					family:    settings.fontFamily
+					pointSize: settings.fontSize
+				}
+
+				color: settings.fontColor
+
+				function log(msg) {
+					text = msg;
+				}
+
+				onTextChanged: {
+					if ( text === '' ) {
+						Layout.preferredHeight = 0;
+					} else {
+						Layout.preferredHeight = contentHeight;
+					}
+				}
 			}
 		}
 	}

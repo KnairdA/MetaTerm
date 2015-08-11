@@ -1,6 +1,6 @@
-function execute(command) {
+function execute(output, command) {
 	var msg = function(name) {
-		console.log('"' + name + '"' + " is not implemented.");
+		output.log('"' + name + '"' + " is not implemented.");
 	};
 	var args = command.split(' ');
 
@@ -9,7 +9,7 @@ function execute(command) {
 
 		if ( typeof closure === "function" ) {
 			args.shift();
-			closure(args);
+			closure(output, args);
 		} else {
 			msg(args[0]);
 		}
@@ -18,8 +18,18 @@ function execute(command) {
 	}
 }
 
-function exec(args) {
-	eval(args.join(' '));
+function exec(output, args) {
+	var result = eval(args.join(' '));
+
+	if ( typeof result !== "undefined" ) {
+		output.log(result);
+	} else {
+		output.log('');
+	}
+}
+
+function jump(output, index) {
+	terminalList.selectItem(index);
 }
 
 function next() {
@@ -30,6 +40,3 @@ function prev() {
 	terminalList.selectPrev();
 }
 
-function jump(index) {
-	terminalList.selectItem(index);
-}

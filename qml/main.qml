@@ -39,7 +39,6 @@ ApplicationWindow {
 			id: command
 
 			Layout.fillWidth: true
-			height: 20
 
 			onExecuted: state.enterNormalMode()
 		}
