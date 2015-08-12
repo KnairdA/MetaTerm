@@ -17,7 +17,7 @@ Item {
 
 		property int    fontSize   : 18
 		property string fontFamily : "Monospace"
-		property color  fontColor  : "white"
+		property string fontColor  : "white"
 	}
 
 	anchors {

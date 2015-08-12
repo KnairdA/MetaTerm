@@ -18,8 +18,8 @@ Item {
 		property int    fontSize          : 8
 		property string fontFamily        : "Monospace"
 		property string colorScheme       : "cool-retro-term"
-		property color  overlayBackground : "black"
-		property color  overlayFontColor  : "white"
+		property string overlayBackground : "black"
+		property string overlayFontColor  : "white"
 	}
 
 	property int lines : settings.initialLines

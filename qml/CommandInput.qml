@@ -17,11 +17,11 @@ Item {
 		id: settings
 		category: "command"
 
-		property color  background : "black"
+		property string background : "black"
 		property int    fontSize   : 12
 		property string fontFamily : "Monospace"
-		property color  fontColor  : "white"
-		property color  errorColor : "red"
+		property string fontColor  : "white"
+		property string errorColor : "red"
 	}
 
 	onVisibleChanged: container.reset()

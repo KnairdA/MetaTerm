@@ -13,7 +13,7 @@ ApplicationWindow {
 		id: settings
 		category: "window"
 
-		property color background  : "#161616"
+		property string background : "#161616"
 	}
 
 	color: settings.background

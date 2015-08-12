@@ -6,8 +6,8 @@ Item {
 		id: settings
 		category: "highlighter"
 
-		property color defaultColor : "#909636"
-		property color focusColor   : "#352F6A"
+		property string defaultColor : "#909636"
+		property string focusColor   : "#352F6A"
 	}
 
 	function select()   { bar.opacity = 1                     }
