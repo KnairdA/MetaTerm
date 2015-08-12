@@ -21,6 +21,7 @@ Item {
 		property int    fontSize   : 12
 		property string fontFamily : "Monospace"
 		property color  fontColor  : "white"
+		property color  errorColor : "red"
 	}
 
 	onVisibleChanged: container.reset()
@@ -121,11 +122,15 @@ Item {
 				}
 
 				function error(msg) {
-					text += '<i><font color="red">' + msg + '</font></i>';
+					text = '<i><font color="'
+					     + settings.errorColor
+					     + '">'
+					     + msg
+					     + '</font></i>';
 				}
 
 				onTextChanged: {
-					if ( text === '' ) {
+					if ( isInitial() ) {
 						Layout.preferredHeight = 0;
 					} else {
 						Layout.preferredHeight = contentHeight;
