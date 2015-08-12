@@ -50,8 +50,8 @@ Item {
 			id: container
 
 			function reset() {
-				command.text = '';
-				output.text  = '';
+				command.initialize();
+				output.initialize();
 			}
 
 			TextInput {
@@ -69,7 +69,13 @@ Item {
 				selectedTextColor: settings.background
 				selectByMouse:     true
 
+				function initialize() {
+					text = '';
+				}
+
 				onAccepted: {
+					output.initialize();
+
 					const prefix = String(text).charAt(0);
 					const cmd    = String(text).substring(1, String(text).length);
 
@@ -79,11 +85,11 @@ Item {
 							break;
 						}
 						default: {
-							output.log('"' + prefix + '"' + " is not a command prefix.");
+							output.error('"' + prefix + '"' + ' is not a command prefix.');
 						}
 					}
 
-					if ( output.text === '' ) {
+					if ( output.isInitial() ) {
 						item.executed();
 					}
 				}
@@ -102,8 +108,20 @@ Item {
 
 				color: settings.fontColor
 
+				function isInitial() {
+					return text === '';
+				}
+
+				function initialize() {
+					text = '';
+				}
+
 				function log(msg) {
-					text = msg;
+					text += msg;
+				}
+
+				function error(msg) {
+					text += '<i><font color="red">' + msg + '</font></i>';
 				}
 
 				onTextChanged: {
