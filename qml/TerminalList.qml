@@ -89,6 +89,12 @@ Item {
 		return children[activeItem];
 	}
 
+	function iterate(func) {
+		for ( var i = 0; i < children.length; i++ ) {
+			func(children[i]);
+		}
+	}
+
 	Flickable {
 		id: flickable
 

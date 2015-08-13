@@ -118,7 +118,11 @@ Item {
 				}
 
 				function log(msg) {
-					text += msg;
+					if ( isInitial() ) {
+						text = msg;
+					} else {
+						text += '<br/>' + msg;
+					}
 				}
 
 				function error(msg) {
