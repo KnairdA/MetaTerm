@@ -150,6 +150,9 @@ Item {
 	Action {
 		id: resetTerminalAction
 		shortcut: settings.resetItem
-		onTriggered: terminalList.getCurrent().reset()
+		onTriggered: {
+			terminalList.getCurrent().reset();
+			terminalList.getCurrent().select();
+		}
 	}
 }

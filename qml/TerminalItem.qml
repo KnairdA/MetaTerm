@@ -84,7 +84,6 @@ Item {
 			command.focus    = true;
 
 			unfocus();
-			select();
 		}
 	}
 

@@ -23,13 +23,15 @@ function exec(output, args) {
 
 	if ( typeof result !== 'undefined' ) {
 		output.log(result);
-	} else {
-		output.log('');
 	}
 }
 
 function jump(output, index) {
 	terminalList.selectItem(index);
+}
+
+function kill(output, index) {
+	terminalList.get(index).reset();
 }
 
 function next() {

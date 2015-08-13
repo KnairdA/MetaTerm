@@ -89,6 +89,10 @@ Item {
 		return children[activeItem];
 	}
 
+	function get(index) {
+		return children[index];
+	}
+
 	function iterate(func) {
 		for ( var i = 0; i < children.length; i++ ) {
 			func(children[i]);
