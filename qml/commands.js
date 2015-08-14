@@ -19,10 +19,14 @@ function execute(output, command) {
 }
 
 function exec(output, args) {
-	var result = eval(args.join(' '));
+	try {
+		var result = eval(args.join(' '));
 
-	if ( typeof result !== 'undefined' ) {
-		output.log(result);
+		if ( typeof result !== 'undefined' ) {
+			output.log(result);
+		}
+	} catch (exception) {
+		output.error(exception);
 	}
 }
 
