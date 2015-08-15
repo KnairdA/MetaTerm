@@ -9,8 +9,7 @@ ApplicationWindow {
 
 	visible: true
 
-	Settings {
-		id: settings
+	property Settings settings : Settings {
 		category: "window"
 
 		property string background : "#161616"

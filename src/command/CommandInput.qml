@@ -13,8 +13,7 @@ Item {
 
 	Layout.preferredHeight: container.height
 
-	Settings {
-		id: settings
+	property Settings settings : Settings {
 		category: "command"
 
 		property string background : "black"

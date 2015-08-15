@@ -11,8 +11,7 @@ Item {
 
 	signal executed (int index)
 
-	Settings {
-		id: settings
+	property Settings settings : Settings {
 		category: "item"
 
 		property int    fontSize   : 18

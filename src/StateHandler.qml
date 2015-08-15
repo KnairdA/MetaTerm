@@ -8,8 +8,7 @@ Item {
 	property Item         terminalList : null
 	property CommandInput commandInput : null
 
-	Settings {
-		id: settings
+	property Settings settings : Settings {
 		category: "keybinding"
 
 		property string insertMode   : "i"
