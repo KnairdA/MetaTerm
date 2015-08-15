@@ -1,0 +1,12 @@
+<RCC>
+	<qresource prefix="/">
+		<file>main.qml</file>
+		<file>StateHandler.qml</file>
+		<file alias="TerminalItem.qml">list/TerminalItem.qml</file>
+		<file alias="TerminalList.qml">list/TerminalList.qml</file>
+		<file alias="CommandInput.qml">command/CommandInput.qml</file>
+		<file alias="commands.js">command/commands.js</file>
+		<file alias="EmbeddedTerminal.qml">widget/EmbeddedTerminal.qml</file>
+		<file alias="Highlighter.qml">widget/Highlighter.qml</file>
+	</qresource>
+</RCC>
