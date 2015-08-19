@@ -6,18 +6,10 @@ import Qt.labs.settings 1.0
 Item {
 	id: item
 
-	property int              index    : 0
 	property EmbeddedTerminal terminal : null
+	property int              index    : 0
 
 	signal executed (int index)
-
-	property Settings settings : Settings {
-		category: "item"
-
-		property int    fontSize   : 18
-		property string fontFamily : "Monospace"
-		property string fontColor  : "white"
-	}
 
 	anchors {
 		left:  parent.left
@@ -106,6 +98,7 @@ Item {
 				var terminalComponent   = Qt.createComponent("qrc:/EmbeddedTerminal.qml");
 				var instantiateTerminal = function() {
 					item.terminal = terminalComponent.createObject(elementList, {
+						"settings"         : settings,
 						"program"          : program,
 						"workingDirectory" : "$HOME",
 						"focus"            : true
@@ -136,12 +129,12 @@ Item {
 					id: command
 
 					font {
-						family:    settings.fontFamily
-						pointSize: settings.fontSize
+						family:    settings.item.fontFamily
+						pointSize: settings.item.fontSize
 					}
 
-					color:             settings.fontColor
-					selectionColor:    settings.fontColor
+					color:             settings.item.fontColor
+					selectionColor:    settings.item.fontColor
 					selectedTextColor: "#161616"
 
 					selectByMouse:    true
@@ -162,10 +155,10 @@ Item {
 
 				Text {
 					font {
-						family: settings.fontFamily
-						pointSize: settings.fontSize / 1.5
+						family: settings.item.fontFamily
+						pointSize: settings.item.fontSize / 1.5
 					}
-					color: settings.fontColor
+					color: settings.item.fontColor
 
 					text: item.index
 				}

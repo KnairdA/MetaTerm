@@ -5,24 +5,6 @@ import Qt.labs.settings 1.0
 Item {
 	id: item
 
-	property Item         terminalList : null
-	property CommandInput commandInput : null
-
-	property Settings settings : Settings {
-		category: "keybinding"
-
-		property string insertMode   : "i"
-		property string normalMode   : "Shift+ESC"
-		property string commandMode  : ":"
-		property string nextItem     : "j"
-		property string prevItem     : "k"
-		property string firstItem    : "g"
-		property string resetItem    : "d"
-		property string lastItem     : "Shift+G"
-		property string heightenItem : "Shift+J"
-		property string shortenItem  : "Shift+K"
-	}
-
 	state: "INSERT"
 
 	function enterInsertMode() {
@@ -80,19 +62,19 @@ Item {
 
 	Action {
 		id: enterNormalAction
-		shortcut: settings.normalMode
+		shortcut: settings.keybinding.normalMode
 		onTriggered: {
 			item.state = "NORMAL";
 
             terminalList.forceActiveFocus();
 			terminalList.unfocusCurrent();
-			commandInput.unfocus();
+			command.unfocus();
 		}
 	}
 
 	Action {
 		id: enterInsertAction
-		shortcut: settings.insertMode
+		shortcut: settings.keybinding.insertMode
 		onTriggered: {
 			item.state = "INSERT";
 
@@ -102,53 +84,53 @@ Item {
 
 	Action {
 		id: enterCommandAction
-		shortcut: settings.commandMode
+		shortcut: settings.keybinding.commandMode
 		onTriggered: {
 			item.state = "COMMAND";
 
-			commandInput.focus(shortcut);
+			command.focus(shortcut);
 		}
 	}
 
 	Action {
 		id: nextTerminalAction
-		shortcut: settings.nextItem
+		shortcut: settings.keybinding.nextItem
 		onTriggered: terminalList.selectNext()
 	}
 
 	Action {
 		id: heightenTerminalAction
-		shortcut: settings.heightenItem
+		shortcut: settings.keybinding.heightenItem
 		onTriggered: terminalList.getCurrent().heighten()
 	}
 
 	Action {
 		id: shortenTerminalAction
-		shortcut: settings.shortenItem
+		shortcut: settings.keybinding.shortenItem
 		onTriggered: terminalList.getCurrent().shorten()
 	}
 
 	Action {
 		id: prevTerminalAction
-		shortcut: settings.prevItem
+		shortcut: settings.keybinding.prevItem
 		onTriggered: terminalList.selectPrev()
 	}
 
 	Action {
 		id: lastTerminalAction
-		shortcut: settings.lastItem
+		shortcut: settings.keybinding.lastItem
 		onTriggered: terminalList.selectItem(terminalList.children.length - 1)
 	}
 
 	Action {
 		id: firstTerminalAction
-		shortcut: settings.firstItem
+		shortcut: settings.keybinding.firstItem
 		onTriggered: terminalList.selectItem(0)
 	}
 
 	Action {
 		id: resetTerminalAction
-		shortcut: settings.resetItem
+		shortcut: settings.keybinding.resetItem
 		onTriggered: {
 			terminalList.getCurrent().reset();
 			terminalList.getCurrent().select();

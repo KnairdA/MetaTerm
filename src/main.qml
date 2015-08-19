@@ -2,24 +2,24 @@ import QtQuick 2.0
 import QtQuick.Window 2.0
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
-import Qt.labs.settings 1.0
 
 ApplicationWindow {
 	id: root
 
 	visible: true
-
-	property Settings settings : Settings {
-		category: "window"
-
-		property string background : "#161616"
-	}
-
-	color: settings.background
+	color: settings.window.background
 
 	Component.onCompleted: {
 		terminalList.createItem();
 		terminalList.focusCurrent();
+	}
+
+	SettingsHandler {
+		id: settings
+	}
+
+	StateHandler {
+		id: mode
 	}
 
 	ColumnLayout {
@@ -27,8 +27,6 @@ ApplicationWindow {
 
 		TerminalList {
 			id: terminalList
-
-			state: state
 
 			Layout.fillHeight: true
 			Layout.fillWidth:  true
@@ -39,14 +37,7 @@ ApplicationWindow {
 
 			Layout.fillWidth: true
 
-			onExecuted: state.enterNormalMode()
+			onExecuted: mode.enterNormalMode()
 		}
-	}
-
-	StateHandler {
-		id: state
-
-		terminalList: terminalList
-		commandInput: command
 	}
 }

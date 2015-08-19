@@ -1,31 +1,17 @@
 import QtQuick 2.0
 import QMLTermWidget 1.0
 import QtQuick.Layouts 1.1
-import Qt.labs.settings 1.0
 
 Item {
 	id: item
 
-	property string program
-	property string workingDirectory
+	property string          program
+	property string          workingDirectory
 
-	Settings {
-		id: settings
-		category: "terminal"
-
-		property int    initialLines      : 20
-		property int    frameWidth        : 10
-		property int    fontSize          : 8
-		property string fontFamily        : "Monospace"
-		property string colorScheme       : "cool-retro-term"
-		property string overlayBackground : "black"
-		property string overlayFontColor  : "white"
-	}
-
-	property int lines : settings.initialLines
+	property int   lines    : settings.terminal.initialLines
 
 	height: terminal.height
-	width:  parent.width - settings.frameWidth
+	width:  parent.width - settings.terminal.frameWidth
 
 	function select()         { highlighter.select()     }
 	function deselect()       { highlighter.deselect()   }
@@ -44,7 +30,7 @@ Item {
 		Highlighter {
 			id: highlighter
 
-			width: settings.frameWidth
+			width: settings.terminal.frameWidth
 			Layout.fillHeight: true
 		}
 
@@ -52,14 +38,14 @@ Item {
 			id: terminal
 
 			font {
-				family:    settings.fontFamily
-				pointSize: settings.fontSize
+				family:    settings.terminal.fontFamily
+				pointSize: settings.terminal.fontSize
 			}
 
 			Layout.fillWidth:       true
 			Layout.preferredHeight: fontMetrics.height * item.lines
 
-			colorScheme: settings.colorScheme
+			colorScheme: settings.terminal.colorScheme
 
 			session: QMLTermSession {
 				initialWorkingDirectory: item.workingDirectory
@@ -99,7 +85,7 @@ Item {
 
 				anchors.fill: parent
 				opacity: 0
-				color: settings.overlayBackground
+				color: settings.terminal.overlayBackground
 
 				SequentialAnimation {
 					id: animation
@@ -130,10 +116,10 @@ Item {
 					}
 
 					font {
-						family:    settings.fontFamily
-						pointSize: settings.fontSize * 2
+						family:    settings.terminal.fontFamily
+						pointSize: settings.terminal.fontSize * 2
 					}
-					color: settings.overlayFontColor
+					color: settings.terminal.overlayFontColor
 
 					text: {
 						return item.lines

@@ -4,11 +4,12 @@ import QtQuick.Layouts 1.1
 Item {
 	id: item
 
-	property StateHandler state      : null
-	property int          activeItem : 0
-	property int          itemIndex  : 0
+	property int activeItem : 0
+	property int itemIndex  : 0
 
 	property alias children : column.children
+
+	property Component terminalItem : Component { TerminalItem { } }
 
 	function onItemExecuted(index) {
 		if ( index === (children.length - 1) ) {
@@ -17,11 +18,10 @@ Item {
 	}
 
 	function createItem() {
-		var terminalItem = Qt.createComponent("qrc:/TerminalItem.qml");
 		var instantiateTerminal = function() {
 			var instance = terminalItem.createObject(column, {
-				"index": itemIndex,
-				"width": flickable.width
+				"index" : itemIndex,
+				"width" : flickable.width
 			});
 			instance.onExecuted.connect(onItemExecuted);
 
@@ -67,7 +67,7 @@ Item {
 		if ( activeItem < (children.length - 1) ) {
 			selectItem(activeItem + 1);
 		} else {
-			state.enterInsertMode();
+			mode.enterInsertMode();
 		}
 	}
 

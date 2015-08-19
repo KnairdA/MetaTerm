@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
-import Qt.labs.settings 1.0
 
 import "commands.js" as Commands
 
@@ -12,16 +11,6 @@ Item {
 	visible: false
 
 	Layout.preferredHeight: container.height
-
-	property Settings settings : Settings {
-		category: "command"
-
-		property string background : "black"
-		property int    fontSize   : 12
-		property string fontFamily : "Monospace"
-		property string fontColor  : "white"
-		property string errorColor : "red"
-	}
 
 	onVisibleChanged: container.reset()
 
@@ -44,7 +33,7 @@ Item {
 
 		height: container.height
 
-		color: settings.background
+		color: settings.command.background
 
 		ColumnLayout {
 			id: container
@@ -60,13 +49,13 @@ Item {
 				Layout.fillWidth: true
 
 				font {
-					family:    settings.fontFamily
-					pointSize: settings.fontSize
+					family:    settings.command.fontFamily
+					pointSize: settings.command.fontSize
 				}
 
-				color:             settings.fontColor
-				selectionColor:    settings.fontColor
-				selectedTextColor: settings.background
+				color:             settings.command.fontColor
+				selectionColor:    settings.command.fontColor
+				selectedTextColor: settings.command.background
 				selectByMouse:     true
 
 				function initialize() {
@@ -102,11 +91,11 @@ Item {
 				Layout.preferredHeight: 0
 
 				font {
-					family:    settings.fontFamily
-					pointSize: settings.fontSize
+					family:    settings.command.fontFamily
+					pointSize: settings.command.fontSize
 				}
 
-				color: settings.fontColor
+				color: settings.command.fontColor
 
 				function isInitial() {
 					return text === '';
@@ -126,7 +115,7 @@ Item {
 
 				function error(msg) {
 					text = '<i><font color="'
-					     + settings.errorColor
+					     + settings.command.errorColor
 					     + '">'
 					     + msg
 					     + '</font></i>';

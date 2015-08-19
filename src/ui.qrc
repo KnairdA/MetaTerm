@@ -2,6 +2,7 @@
 	<qresource prefix="/">
 		<file>main.qml</file>
 		<file>StateHandler.qml</file>
+		<file>SettingsHandler.qml</file>
 		<file alias="TerminalItem.qml">list/TerminalItem.qml</file>
 		<file alias="TerminalList.qml">list/TerminalList.qml</file>
 		<file alias="CommandInput.qml">command/CommandInput.qml</file>
