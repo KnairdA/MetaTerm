@@ -123,8 +123,8 @@ Item {
 
 					text: {
 						return item.lines
-						     + 'x'
-						     + Math.floor(terminal.width / terminal.fontMetrics.width);
+						       + 'x'
+						       + Math.floor(terminal.width / terminal.fontMetrics.width);
 					}
 				}
 			}

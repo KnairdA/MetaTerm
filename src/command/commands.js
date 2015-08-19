@@ -18,9 +18,9 @@ function execute(output, command) {
 	}
 }
 
-function exec(output, args) {
+function safeEval(output, code) {
 	try {
-		var result = eval(args.join(' '));
+		var result = eval(code);
 
 		if ( typeof result !== 'undefined' ) {
 			output.log(result);
@@ -28,6 +28,10 @@ function exec(output, args) {
 	} catch (exception) {
 		output.error(exception);
 	}
+}
+
+function exec(output, args) {
+	safeEval(output, args.join(' '));
 }
 
 function jump(output, index) {
@@ -52,4 +56,24 @@ function ls(output) {
 			output.log(item.index + ': ' + item.terminal.program);
 		}
 	});
+}
+
+function set(output, args) {
+	switch ( args.length ) {
+		case 2: {
+			safeEval(output, 'settings.' + args[0] + '.' + args[1]);
+			break;
+		}
+		case 3: {
+			safeEval(
+				output,
+				'settings.' + args[0] + '.' + args[1] + ' = "' + args[2] + '"'
+			);
+			break;
+		}
+		default: {
+			output.error('Wrong count of arguments.');
+			break;
+		}
+	}
 }
