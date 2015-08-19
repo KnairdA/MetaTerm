@@ -2,7 +2,7 @@ function execute(output, command) {
 	var notImplemented = function(name) {
 		output.error('"' + name + '"' + ' is not implemented.');
 	};
-	var args = command.split(' ');
+	var args = command.trim().split(' ');
 
 	try {
 		var closure = eval(args[0]);
