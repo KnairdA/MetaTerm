@@ -2,6 +2,49 @@ import QtQuick 2.0
 import Qt.labs.settings 1.0
 
 QtObject {
+	function getSetter(category, name) {
+		try {
+			var type = typeof eval(category + '.' + name);
+
+			switch ( type ) {
+				case 'undefined': {
+					throw new ReferenceError();
+					break;
+				}
+				case 'string': {
+					return function(value) {
+						return eval(category + '.' + name + ' = "' + value + '"');
+					}
+					break;
+				}
+				default: {
+					return function(value) {
+						return eval(category + '.' + name + ' = ' + value);
+					}
+					break;
+				}
+			}
+		}
+		catch (exception) {
+			throw category + '.' + name + ' doesnt exist.';
+		}
+	}
+
+	function read(category, name) {
+		try {
+			var value = eval(category + '.' + name);
+
+			if ( typeof value === 'undefined' ) {
+				throw new ReferenceError();
+			} else {
+				return value;
+			}
+		}
+		catch (exception) {
+			throw category + '.' + name + ' doesnt exist.';
+		}
+	}
+
 	property Settings window : Settings {
 		category: "window"
 

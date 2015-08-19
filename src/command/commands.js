@@ -14,13 +14,17 @@ function execute(output, command) {
 			notImplemented(args[0]);
 		}
 	} catch (exception) {
-		notImplemented(args[0]);
+		if ( exception instanceof ReferenceError ) {
+			notImplemented(args[0]);
+		} else {
+			output.error(exception);
+		}
 	}
 }
 
-function safeEval(output, code) {
+function exec(output, args) {
 	try {
-		var result = eval(code);
+		var result = eval(args.join(' '));
 
 		if ( typeof result !== 'undefined' ) {
 			output.log(result);
@@ -28,10 +32,6 @@ function safeEval(output, code) {
 	} catch (exception) {
 		output.error(exception);
 	}
-}
-
-function exec(output, args) {
-	safeEval(output, args.join(' '));
 }
 
 function jump(output, index) {
@@ -61,14 +61,11 @@ function ls(output) {
 function set(output, args) {
 	switch ( args.length ) {
 		case 2: {
-			safeEval(output, 'settings.' + args[0] + '.' + args[1]);
+			output.log(settings.read(args[0], args[1]));
 			break;
 		}
 		case 3: {
-			safeEval(
-				output,
-				'settings.' + args[0] + '.' + args[1] + ' = "' + args[2] + '"'
-			);
+			settings.getSetter(args[0], args[1])(args[2]);
 			break;
 		}
 		default: {
