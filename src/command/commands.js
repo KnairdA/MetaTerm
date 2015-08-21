@@ -34,22 +34,6 @@ function exec(output, args) {
 	}
 }
 
-function jump(output, index) {
-	terminalList.selectItem(index);
-}
-
-function kill(output, index) {
-	terminalList.get(index).reset();
-}
-
-function next() {
-	terminalList.selectNext();
-}
-
-function prev() {
-	terminalList.selectPrev();
-}
-
 function ls(output) {
 	terminalList.iterate(function(item) {
 		if ( item.terminal !== null ) {
@@ -73,4 +57,24 @@ function set(output, args) {
 			break;
 		}
 	}
+}
+
+function jump(output, index) {
+	terminalList.selectItem(index);
+}
+
+function kill(output, index) {
+	terminalList.get(index).reset();
+}
+
+function next() {
+	terminalList.selectNext();
+}
+
+function prev() {
+	terminalList.selectPrev();
+}
+
+function q() {
+	Qt.quit();
 }

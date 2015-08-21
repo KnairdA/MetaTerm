@@ -5,17 +5,17 @@ import QtQuick.Layouts 1.1
 Item {
 	id: item
 
-	property string          program
-	property string          workingDirectory
+	property string program
+	property string workingDirectory
 
-	property int   lines    : settings.terminal.initialLines
-
-	height: terminal.height
-	width:  parent.width - settings.terminal.frameWidth
+	property int lines : settings.terminal.initialLines
 
 	function select()         { highlighter.select()     }
 	function deselect()       { highlighter.deselect()   }
 	function displayOverlay() { overlay.displayBriefly() }
+
+	height: terminal.height
+	width:  parent.width - settings.terminal.frameWidth
 
 	RowLayout {
 		id: container

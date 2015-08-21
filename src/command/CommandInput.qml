@@ -8,12 +8,6 @@ Item {
 
 	signal executed
 
-	visible: false
-
-	Layout.preferredHeight: container.height
-
-	onVisibleChanged: container.reset()
-
 	function focus(prefix) {
 		visible      = true;
 		command.text = prefix;
@@ -23,6 +17,12 @@ Item {
 	function unfocus() {
 		visible = false;
 	}
+
+	visible: false
+
+	Layout.preferredHeight: container.height
+
+	onVisibleChanged: container.reset()
 
 	Rectangle {
 		anchors {
