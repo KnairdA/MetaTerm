@@ -55,6 +55,24 @@ function ls(output) {
 
 function set(output, args) {
 	switch ( args.length ) {
+		case 0: {
+			Object.keys(settings).filter(
+				function(element) {
+					return element                  !== 'objectName'
+					    && typeof settings[element] !== 'function';
+				}
+			).forEach(output.log);
+			break;
+		}
+		case 1: {
+			Object.keys(settings[args[0]]).filter(
+				function(element) {
+					return element                           !== 'objectName'
+					    && typeof settings[args[0]][element] !== 'function';
+				}
+			).forEach(output.log);
+			break;
+		}
 		case 2: {
 			output.log(settings.read(args[0], args[1]));
 			break;
