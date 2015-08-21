@@ -26,8 +26,19 @@ function exec(output, args) {
 	try {
 		var result = eval(args.join(' '));
 
-		if ( typeof result !== 'undefined' ) {
-			output.log(result);
+		switch ( typeof result ) {
+			case 'string': {
+				output.log(result);
+				break;
+			}
+			case 'number': {
+				output.log(result);
+				break;
+			}
+			case 'object': {
+				output.log(JSON.stringify(result));
+				break;
+			}
 		}
 	} catch (exception) {
 		output.error(exception);
