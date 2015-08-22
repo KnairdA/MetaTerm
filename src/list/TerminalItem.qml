@@ -1,7 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
-import Qt.labs.settings 1.0
 
 Item {
 	id: item
@@ -135,7 +134,7 @@ Item {
 
 					color:             settings.item.fontColor
 					selectionColor:    settings.item.fontColor
-					selectedTextColor: "#161616"
+					selectedTextColor: settings.window.background
 
 					selectByMouse:    true
 					focus:            true
