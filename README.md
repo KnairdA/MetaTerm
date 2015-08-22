@@ -14,6 +14,5 @@ If all requirements are satisfied _MetaTerm_ may be built using a simple chain o
 
 ## Requirements
 
-* Qt 5
-* QMLTermWidget version including support for program arguments
-	* Use [my fork](https://github.com/KnairdA/qmltermwidget) as long as the [pull request](https://github.com/Swordfish90/qmltermwidget/pull/4) is not merged
+* [Qt 5](http://qt.io)
+* [QMLTermWidget](https://github.com/Swordfish90/qmltermwidget)
