@@ -68,6 +68,7 @@ function set(output, args) {
 			Object.keys(settings[args[0]]).filter(
 				function(element) {
 					return element                           !== 'objectName'
+					    && element                           !== 'category'
 					    && typeof settings[args[0]][element] !== 'function';
 				}
 			).forEach(output.log);
