@@ -2,46 +2,19 @@ import QtQuick 2.0
 import Qt.labs.settings 1.0
 
 QtObject {
-	function getSetter(category, name) {
-		try {
-			var type = typeof eval(category + '.' + name);
-
-			switch ( type ) {
-				case 'undefined': {
-					throw new ReferenceError();
-					break;
-				}
-				case 'string': {
-					return function(value) {
-						return eval(category + '.' + name + ' = "' + value + '"');
-					}
-					break;
-				}
-				default: {
-					return function(value) {
-						return eval(category + '.' + name + ' = ' + value);
-					}
-					break;
-				}
-			}
-		}
-		catch (exception) {
+	function read(category, name) {
+		if ( typeof this[category][name] === 'undefined' ) {
 			throw category + '.' + name + ' doesnt exist.';
+		} else {
+			return this[category][name];
 		}
 	}
 
-	function read(category, name) {
-		try {
-			var value = eval(category + '.' + name);
-
-			if ( typeof value === 'undefined' ) {
-				throw new ReferenceError();
-			} else {
-				return value;
-			}
-		}
-		catch (exception) {
+	function set(category, name, value) {
+		if ( typeof this[category][name] === 'undefined' ) {
 			throw category + '.' + name + ' doesnt exist.';
+		} else {
+			this[category][name] = value;
 		}
 	}
 

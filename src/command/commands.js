@@ -79,7 +79,7 @@ function set(output, args) {
 			break;
 		}
 		case 3: {
-			settings.getSetter(args[0], args[1])(args[2]);
+			settings.set(args[0], args[1], args[2]);
 			break;
 		}
 		default: {
