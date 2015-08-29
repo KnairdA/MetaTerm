@@ -6,6 +6,7 @@ Item {
 	id: item
 
 	property EmbeddedTerminal terminal : null
+	property HistoryViewer    history  : null
 	property int              index    : 0
 
 	signal executed (int index)
@@ -96,11 +97,21 @@ Item {
 			function createTerminal(program) {
 				var terminalComponent   = Qt.createComponent("qrc:/EmbeddedTerminal.qml");
 				var instantiateTerminal = function() {
+					if ( item.history !== null ) {
+						item.history.destroy();
+						item.history = null;
+					}
+
 					item.terminal = terminalComponent.createObject(elementList, {
 						"settings"         : settings,
 						"program"          : program,
 						"workingDirectory" : "$HOME",
 						"focus"            : true
+					});
+					item.terminal.onFinished.connect(function() {
+						var history = item.terminal.history;
+						item.reset();
+						createHistoryViewer(history);
 					});
 				}
 
@@ -108,6 +119,21 @@ Item {
 					instantiateTerminal();
 				} else {
 					terminalComponent.statusChanged.connect(instantiateTerminal);
+				}
+			}
+
+			function createHistoryViewer(history) {
+				var historyComponent   = Qt.createComponent("qrc:/HistoryViewer.qml");
+				var instantiateHistory = function() {
+					item.history = historyComponent.createObject(elementList, {
+						"history" : history
+					});
+				}
+
+				if ( historyComponent.status === Component.Ready ) {
+					instantiateHistory();
+				} else {
+					historyComponent.statusChanged.connect(instantiateHistory);
 				}
 			}
 

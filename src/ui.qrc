@@ -8,6 +8,7 @@
 		<file alias="CommandInput.qml">command/CommandInput.qml</file>
 		<file alias="commands.js">command/commands.js</file>
 		<file alias="EmbeddedTerminal.qml">widget/EmbeddedTerminal.qml</file>
+		<file alias="HistoryViewer.qml">widget/HistoryViewer.qml</file>
 		<file alias="Highlighter.qml">widget/Highlighter.qml</file>
 	</qresource>
 </RCC>

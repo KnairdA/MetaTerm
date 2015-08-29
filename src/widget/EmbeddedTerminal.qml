@@ -5,10 +5,14 @@ import QtQuick.Layouts 1.1
 Item {
 	id: item
 
+	signal finished
+
 	property string program
 	property string workingDirectory
 
 	property int lines : settings.terminal.initialLines
+
+	property alias history : session.history
 
 	function select()         { highlighter.select()     }
 	function deselect()       { highlighter.deselect()   }
@@ -48,6 +52,8 @@ Item {
 			colorScheme: settings.terminal.colorScheme
 
 			session: QMLTermSession {
+				id: session
+
 				initialWorkingDirectory: item.workingDirectory
 
 				shellProgram: {
@@ -59,6 +65,11 @@ Item {
 					elements.shift();
 
 					return elements;
+				}
+
+				onFinished: {
+					clearScreen();
+					item.finished();
 				}
 			}
 
