@@ -10,7 +10,7 @@ Item {
 	height: viewer.height
 	width:  parent.width - settings.terminal.frameWidth
 
-	Text {
+	TextEdit {
 		id: viewer
 
 		anchors {
@@ -19,14 +19,19 @@ Item {
 			right: parent.right
 		}
 
-		color: settings.item.fontColor
+		Layout.fillWidth: true
 
 		font {
 			family:    settings.terminal.fontFamily
 			pointSize: settings.terminal.fontSize
 		}
 
-		Layout.fillWidth: true
+		color:             settings.item.fontColor
+		selectionColor:    settings.item.fontColor
+		selectedTextColor: settings.window.background
+
+		selectByMouse: true
+		readOnly:      true
 
 		text: history.trim()
 	}
