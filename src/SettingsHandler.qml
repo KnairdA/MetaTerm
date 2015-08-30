@@ -62,6 +62,8 @@ QtObject {
 		property int    fontSize          : 8
 		property string fontFamily        : "Monospace"
 		property string colorScheme       : "cool-retro-term"
+		property string launcherProgram   : "sh"
+		property string launcherArgument  : "-c"
 		property string overlayBackground : "black"
 		property string overlayFontColor  : "white"
 	}

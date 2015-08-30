@@ -56,8 +56,8 @@ Item {
 
 				initialWorkingDirectory: item.workingDirectory
 
-				shellProgram: 'sh'
-				shellProgramArgs: [ '-c', program ]
+				shellProgram: settings.terminal.launcherProgram
+				shellProgramArgs: [ settings.terminal.launcherArgument, program ]
 
 				onFinished: {
 					clearScreen();
