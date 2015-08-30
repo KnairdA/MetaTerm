@@ -38,7 +38,6 @@ Item {
 		scope.forceActiveFocus();
 
 		if ( terminal === null ) {
-			scope.forceActiveFocus();
 			highlighter.select();
 			highlighter.focus();
 		}
@@ -74,6 +73,8 @@ Item {
 			command.readOnly = false;
 			command.focus    = true;
 
+			mode.enterNormalMode();
+			select();
 			unfocus();
 		}
 	}
@@ -109,9 +110,10 @@ Item {
 						"focus"            : true
 					});
 					item.terminal.onFinished.connect(function() {
-						var history = item.terminal.history;
+						createHistoryViewer(item.terminal.history);
 						item.reset();
-						createHistoryViewer(history);
+						terminalList.selectNext();
+						mode.enterInsertMode();
 					});
 				}
 
