@@ -112,8 +112,11 @@ Item {
 					item.terminal.onFinished.connect(function() {
 						createHistoryViewer(item.terminal.history);
 						item.reset();
-						terminalList.selectNext();
-						mode.enterInsertMode();
+
+						if ( item.index === ( terminalList.children.length - 2 ) ) {
+							terminalList.selectNext();
+							mode.enterInsertMode();
+						}
 					});
 				}
 
