@@ -84,7 +84,7 @@ Item {
 				}
 			}
 
-			Text {
+			TextEdit {
 				id: output
 
 				Layout.fillWidth:       true
@@ -95,10 +95,18 @@ Item {
 					pointSize: settings.command.fontSize
 				}
 
-				color: settings.command.fontColor
+				color:             settings.command.fontColor
+				selectionColor:    settings.command.fontColor
+				selectedTextColor: settings.command.background
+
+				selectByMouse: true
+				readOnly:      true
+
+				textFormat: TextEdit.RichText
+				wrapMode:   TextEdit.NoWrap
 
 				function isInitial() {
-					return text === '';
+					return length === 0;
 				}
 
 				function initialize() {
@@ -109,7 +117,7 @@ Item {
 					if ( isInitial() ) {
 						text = msg;
 					} else {
-						text += '<br/>' + msg;
+						text += '\n' + msg;
 					}
 				}
 
