@@ -56,16 +56,8 @@ Item {
 
 				initialWorkingDirectory: item.workingDirectory
 
-				shellProgram: {
-					return (item.program).split(" ")[0];
-				}
-
-				shellProgramArgs: {
-					const elements = (item.program).split(" ");
-					elements.shift();
-
-					return elements;
-				}
+				shellProgram: 'sh'
+				shellProgramArgs: [ '-c', program ]
 
 				onFinished: {
 					clearScreen();
