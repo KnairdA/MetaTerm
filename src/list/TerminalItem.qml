@@ -74,7 +74,6 @@ Item {
 			command.focus    = true;
 
 			mode.enterNormalMode();
-			select();
 			unfocus();
 		}
 	}
@@ -112,6 +111,7 @@ Item {
 					item.terminal.onFinished.connect(function() {
 						createHistoryViewer(item.terminal.history);
 						item.reset();
+						item.select();
 
 						if ( item.index === ( terminalList.children.length - 2 ) ) {
 							terminalList.selectNext();
