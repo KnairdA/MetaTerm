@@ -37,12 +37,17 @@ Item {
 
 	function scrollTo(index) {
 		if ( column.height >= flickable.height ) {
-			var offset = children[index].y
-					   + (children[index].height / 2)
-					   - (flickable.height / 2);
+			var offset = children[index].y;
+
+			if ( children[index].height > flickable.height ) {
+				offset -= (flickable.height / 2);
+			} else {
+				offset += (children[index].height / 2)
+				        - (flickable.height / 2);
+			}
 
 			var bound  = column.height
-					   - flickable.height;
+			           - flickable.height;
 
 			if ( offset < 0 ) {
 				flickable.contentY = 0;
