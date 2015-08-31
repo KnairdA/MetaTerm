@@ -38,6 +38,7 @@ Item {
 		scope.forceActiveFocus();
 
 		if ( terminal === null ) {
+			command.readOnly = false;
 			highlighter.select();
 			highlighter.focus();
 		}
@@ -45,6 +46,7 @@ Item {
 
 	function unfocus() {
 		if ( terminal === null ) {
+			command.readOnly = true;
 			highlighter.unfocus();
 		}
 	}
@@ -68,14 +70,15 @@ Item {
 	function reset() {
 		if ( terminal !== null ) {
 			terminal.destroy();
-
-			terminal         = null;
-			command.readOnly = false;
-			command.focus    = true;
-
-			mode.enterNormalMode();
-			unfocus();
+			terminal = null;
+		} else if ( history !== null ) {
+			history.destroy();
+			history = null;
 		}
+
+		command.focus = true;
+		mode.enterNormalMode();
+		unfocus();
 	}
 
 	FocusScope {
@@ -172,7 +175,7 @@ Item {
 					Layout.fillWidth: true
 
 					onAccepted: {
-						if ( item.terminal === null ) {
+						if ( !readOnly ) {
 							readOnly = true;
 							focus    = false;
 
