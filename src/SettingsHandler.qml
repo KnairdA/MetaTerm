@@ -42,7 +42,7 @@ QtObject {
 	property Settings item : Settings {
 		category: "item"
 
-		property int    fontSize   : 18
+		property int    fontSize   : 12
 		property string fontFamily : "Monospace"
 		property string fontColor  : "white"
 	}
