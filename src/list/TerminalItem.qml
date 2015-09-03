@@ -146,6 +146,8 @@ Item {
 			}
 
 			RowLayout {
+				spacing: 0
+
 				anchors {
 					left:  parent.left
 					right: parent.right
