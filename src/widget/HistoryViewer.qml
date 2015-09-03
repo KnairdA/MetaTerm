@@ -33,6 +33,8 @@ Item {
 		selectByMouse: true
 		readOnly:      true
 
+		wrapMode: TextEdit.Wrap
+
 		text: history.trim()
 	}
 }
