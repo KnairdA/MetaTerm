@@ -18,6 +18,8 @@ Item {
 	function deselect()       { highlighter.deselect()   }
 	function displayOverlay() { overlay.displayBriefly() }
 
+	function terminate()      { return session.sendSignal(15) }
+
 	height: terminal.height
 	width:  parent.width - settings.terminal.frameWidth
 

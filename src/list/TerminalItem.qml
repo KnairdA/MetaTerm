@@ -81,6 +81,14 @@ Item {
 		unfocus();
 	}
 
+	function terminate() {
+		if ( terminal !== null ) {
+			terminal.terminate();
+		} else {
+			throw "No process to terminate.";
+		}
+	}
+
 	FocusScope {
 		id: scope
 
@@ -114,7 +122,10 @@ Item {
 					item.terminal.onFinished.connect(function() {
 						createHistoryViewer(item.terminal.history);
 						item.reset();
-						item.select();
+
+						if ( item.index === terminalList.activeItem ) {
+							item.select();
+						}
 
 						if ( item.index === ( terminalList.children.length - 2 ) ) {
 							terminalList.selectNext();

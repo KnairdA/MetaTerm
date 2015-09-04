@@ -94,7 +94,9 @@ function jump(output, index) {
 }
 
 function kill(output, index) {
-	terminalList.get(index).reset();
+	if ( !terminalList.get(index).terminate() ) {
+		output.error("Failed to terminate process.");
+	}
 }
 
 function next() {
