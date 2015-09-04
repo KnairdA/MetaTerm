@@ -99,6 +99,10 @@ function kill(output, index) {
 	}
 }
 
+function reset(output, index) {
+	terminalList.get(index).reset();
+}
+
 function next() {
 	terminalList.selectNext();
 }
