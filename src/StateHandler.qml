@@ -18,44 +18,47 @@ Item {
 		State {
 			name: "NORMAL"
 
-			PropertyChanges { target: enterNormalAction;      enabled: false }
-			PropertyChanges { target: enterInsertAction;      enabled: true  }
-			PropertyChanges { target: enterCommandAction;     enabled: true  }
-			PropertyChanges { target: nextTerminalAction;     enabled: true  }
-			PropertyChanges { target: heightenTerminalAction; enabled: true  }
-			PropertyChanges { target: shortenTerminalAction;  enabled: true  }
-			PropertyChanges { target: prevTerminalAction;     enabled: true  }
-			PropertyChanges { target: lastTerminalAction;     enabled: true  }
-			PropertyChanges { target: firstTerminalAction;    enabled: true  }
-			PropertyChanges { target: resetTerminalAction;    enabled: true  }
+			PropertyChanges { target: enterNormalAction;  enabled: false }
+			PropertyChanges { target: enterInsertAction;  enabled: true  }
+			PropertyChanges { target: enterCommandAction; enabled: true  }
+			PropertyChanges { target: nextAction;         enabled: true  }
+			PropertyChanges { target: heightenAction;     enabled: true  }
+			PropertyChanges { target: shortenAction;      enabled: true  }
+			PropertyChanges { target: prevAction;         enabled: true  }
+			PropertyChanges { target: lastAction;         enabled: true  }
+			PropertyChanges { target: firstAction;        enabled: true  }
+			PropertyChanges { target: resetAction;        enabled: true  }
+			PropertyChanges { target: killAction;         enabled: true  }
 		},
 		State {
 			name: "INSERT"
 
-			PropertyChanges { target: enterNormalAction;      enabled: true  }
-			PropertyChanges { target: enterInsertAction;      enabled: false }
-			PropertyChanges { target: enterCommandAction;     enabled: false }
-			PropertyChanges { target: nextTerminalAction;     enabled: false }
-			PropertyChanges { target: heightenTerminalAction; enabled: false }
-			PropertyChanges { target: shortenTerminalAction;  enabled: false }
-			PropertyChanges { target: prevTerminalAction;     enabled: false }
-			PropertyChanges { target: lastTerminalAction;     enabled: false }
-			PropertyChanges { target: firstTerminalAction;    enabled: false }
-			PropertyChanges { target: resetTerminalAction;    enabled: false }
+			PropertyChanges { target: enterNormalAction;  enabled: true  }
+			PropertyChanges { target: enterInsertAction;  enabled: false }
+			PropertyChanges { target: enterCommandAction; enabled: false }
+			PropertyChanges { target: nextAction;         enabled: false }
+			PropertyChanges { target: heightenAction;     enabled: false }
+			PropertyChanges { target: shortenAction;      enabled: false }
+			PropertyChanges { target: prevAction;         enabled: false }
+			PropertyChanges { target: lastAction;         enabled: false }
+			PropertyChanges { target: firstAction;        enabled: false }
+			PropertyChanges { target: resetAction;        enabled: false }
+			PropertyChanges { target: killAction;         enabled: false }
 		},
 		State {
 			name: "COMMAND"
 
-			PropertyChanges { target: enterNormalAction;      enabled: true  }
-			PropertyChanges { target: enterInsertAction;      enabled: false }
-			PropertyChanges { target: enterCommandAction;     enabled: false }
-			PropertyChanges { target: nextTerminalAction;     enabled: false }
-			PropertyChanges { target: heightenTerminalAction; enabled: false }
-			PropertyChanges { target: shortenTerminalAction;  enabled: false }
-			PropertyChanges { target: prevTerminalAction;     enabled: false }
-			PropertyChanges { target: lastTerminalAction;     enabled: false }
-			PropertyChanges { target: firstTerminalAction;    enabled: false }
-			PropertyChanges { target: resetTerminalAction;    enabled: false }
+			PropertyChanges { target: enterNormalAction;  enabled: true  }
+			PropertyChanges { target: enterInsertAction;  enabled: false }
+			PropertyChanges { target: enterCommandAction; enabled: false }
+			PropertyChanges { target: nextAction;         enabled: false }
+			PropertyChanges { target: heightenAction;     enabled: false }
+			PropertyChanges { target: shortenAction;      enabled: false }
+			PropertyChanges { target: prevAction;         enabled: false }
+			PropertyChanges { target: lastAction;         enabled: false }
+			PropertyChanges { target: firstAction;        enabled: false }
+			PropertyChanges { target: resetAction;        enabled: false }
+			PropertyChanges { target: killAction;         enabled: false }
 		}
 	]
 
@@ -92,47 +95,55 @@ Item {
 	}
 
 	Action {
-		id: nextTerminalAction
+		id: nextAction
 		shortcut: settings.keybinding.nextItem
 		onTriggered: terminalList.selectNext()
 	}
 
 	Action {
-		id: heightenTerminalAction
+		id: heightenAction
 		shortcut: settings.keybinding.heightenItem
 		onTriggered: terminalList.getCurrent().heighten()
 	}
 
 	Action {
-		id: shortenTerminalAction
+		id: shortenAction
 		shortcut: settings.keybinding.shortenItem
 		onTriggered: terminalList.getCurrent().shorten()
 	}
 
 	Action {
-		id: prevTerminalAction
+		id: prevAction
 		shortcut: settings.keybinding.prevItem
 		onTriggered: terminalList.selectPrev()
 	}
 
 	Action {
-		id: lastTerminalAction
+		id: lastAction
 		shortcut: settings.keybinding.lastItem
 		onTriggered: terminalList.selectItem(terminalList.children.length - 1)
 	}
 
 	Action {
-		id: firstTerminalAction
+		id: firstAction
 		shortcut: settings.keybinding.firstItem
 		onTriggered: terminalList.selectItem(0)
 	}
 
 	Action {
-		id: resetTerminalAction
+		id: resetAction
 		shortcut: settings.keybinding.resetItem
 		onTriggered: {
 			terminalList.getCurrent().reset();
 			terminalList.getCurrent().select();
+		}
+	}
+
+	Action {
+		id: killAction
+		shortcut: settings.keybinding.killItem
+		onTriggered: {
+			terminalList.getCurrent().terminate();
 		}
 	}
 }
