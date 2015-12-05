@@ -114,3 +114,13 @@ function prev() {
 function q() {
 	Qt.quit();
 }
+
+function cd(output, path) {
+	if ( path.length > 0 ) {
+		if ( !workingDirectory.cd(path) ) {
+			output.error('\"' + path + '\" doesn\'t exist.');
+		}
+	} else {
+		output.log(workingDirectory.current());
+	}
+}
