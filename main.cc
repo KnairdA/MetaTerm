@@ -20,6 +20,10 @@ class WorkingDirectory : public QObject {
 		Q_INVOKABLE QString current() const {
 			return QDir::current().absolutePath();
 		}
+
+		Q_INVOKABLE QString currentOfPID(const int pid) const {
+			return QDir("/proc/" + QString::number(pid) + "/cwd/").canonicalPath();
+		}
 };
 
 int main(int argc, char *argv[]) {
@@ -30,7 +34,7 @@ int main(int argc, char *argv[]) {
 	application.setOrganizationName("akr");
 	application.setApplicationName("MetaTerm");
 
-	engine.rootContext()->setContextProperty("workingDirectory", &directory);
+	engine.rootContext()->setContextProperty("cwd", &directory);
 
 	QObject::connect(
 		static_cast<QObject*>(&engine),

@@ -12,11 +12,12 @@ Item {
 	property int   lines   : settings.terminal.initialLines
 	property alias history : session.history
 
+	function getPID()    { return session.getShellPID()  }
+	function terminate() { return session.sendSignal(15) }
+
 	function select()         { highlighter.select()     }
 	function deselect()       { highlighter.deselect()   }
 	function displayOverlay() { overlay.displayBriefly() }
-
-	function terminate()      { return session.sendSignal(15) }
 
 	height: terminal.height
 	width:  parent.width - settings.terminal.frameWidth

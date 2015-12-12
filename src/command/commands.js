@@ -115,12 +115,12 @@ function q() {
 	Qt.quit();
 }
 
-function cd(output, path) {
-	if ( path.length > 0 ) {
-		if ( !workingDirectory.cd(path) ) {
-			output.error('\"' + path + '\" doesn\'t exist.');
-		}
+function pwd(output) {
+	var terminal = terminalList.getCurrent().terminal;
+
+	if ( terminal !== null ) {
+		output.log(cwd.currentOfPID(terminal.getPID()));
 	} else {
-		output.log(workingDirectory.current());
+		output.error('No running session selected.');
 	}
 }
