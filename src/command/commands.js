@@ -48,7 +48,10 @@ function exec(output, args) {
 function ls(output) {
 	terminalList.iterate(function(item) {
 		if ( item.terminal !== null ) {
-			output.log(item.index + ': ' + item.terminal.program);
+			output.log(
+				item.index + ': ' + item.terminal.program  +
+				' ('              + item.terminal.getPID() + ')'
+			);
 		}
 	});
 }
