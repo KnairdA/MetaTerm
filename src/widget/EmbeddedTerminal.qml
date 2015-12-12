@@ -8,10 +8,8 @@ Item {
 	signal finished
 
 	property string program
-	property string workingDirectory
 
-	property int lines : settings.terminal.initialLines
-
+	property int   lines   : settings.terminal.initialLines
 	property alias history : session.history
 
 	function select()         { highlighter.select()     }
@@ -56,7 +54,7 @@ Item {
 			session: QMLTermSession {
 				id: session
 
-				initialWorkingDirectory: item.workingDirectory
+				initialWorkingDirectory: settings.terminal.initialWorkingDirectory
 
 				shellProgram: settings.terminal.launcherProgram
 				shellProgramArgs: [ settings.terminal.launcherArgument, program ]
@@ -76,8 +74,8 @@ Item {
 
 			onTermGetFocus:  highlighter.focus()
 			onTermLostFocus: highlighter.unfocus()
-			onHeightChanged: overlay.displayBriefly();
-			onWidthChanged:  overlay.displayBriefly();
+			onHeightChanged: overlay.displayBriefly()
+			onWidthChanged:  overlay.displayBriefly()
 
 			Rectangle {
 				id: overlay

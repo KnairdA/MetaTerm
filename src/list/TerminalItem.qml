@@ -114,10 +114,9 @@ Item {
 					}
 
 					item.terminal = terminalComponent.createObject(elementList, {
-						"settings"         : settings,
-						"program"          : program,
-						"workingDirectory" : "$HOME",
-						"focus"            : true
+						"settings" : settings,
+						"program"  : program,
+						"focus"    : true
 					});
 					item.terminal.onFinished.connect(function() {
 						createHistoryViewer(item.terminal.history);
