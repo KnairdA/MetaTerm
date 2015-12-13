@@ -19,7 +19,7 @@ Item {
 	function deselect()       { highlighter.deselect()   }
 	function displayOverlay() { overlay.displayBriefly() }
 
-	height: terminal.height
+	height: terminal.parent.height
 	width:  parent.width - settings.terminal.frameWidth
 
 	RowLayout {
@@ -39,104 +39,161 @@ Item {
 			Layout.fillHeight: true
 		}
 
-		QMLTermWidget {
-			id: terminal
+		ColumnLayout {
+			Layout.fillWidth: true
 
-			font {
-				family:    settings.terminal.fontFamily
-				pointSize: settings.terminal.fontSize
-			}
+			spacing: 0
 
-			Layout.fillWidth:       true
-			Layout.preferredHeight: fontMetrics.height * item.lines
+			QMLTermWidget {
+				id: terminal
 
-			colorScheme: settings.terminal.colorScheme
+				font {
+					family:    settings.terminal.fontFamily
+					pointSize: settings.terminal.fontSize
+				}
 
-			session: QMLTermSession {
-				id: session
+				Layout.fillWidth:       true
+				Layout.preferredHeight: fontMetrics.height * item.lines
 
-				initialWorkingDirectory: settings.terminal.initialWorkingDirectory
+				colorScheme: settings.terminal.colorScheme
 
-				shellProgram: settings.terminal.launcherProgram
-				shellProgramArgs: [ settings.terminal.launcherArgument, program ]
+				session: QMLTermSession {
+					id: session
 
-				onFinished: {
-					clearScreen();
-					item.finished();
+					initialWorkingDirectory: settings.terminal.initialWorkingDirectory
+
+					shellProgram: settings.terminal.launcherProgram
+					shellProgramArgs: [ settings.terminal.launcherArgument, program ]
+
+					onFinished: {
+						clearScreen();
+						item.finished();
+					}
+				}
+
+				Component.onCompleted: {
+					forceActiveFocus();
+					highlighter.select();
+					session.startShellProgram();
+					statusLine.update();
+					overlay.enabled = true;
+				}
+
+				onTermGetFocus: {
+					highlighter.focus();
+					statusLine.update();
+				}
+
+				onTermLostFocus: highlighter.unfocus()
+				onHeightChanged: overlay.displayBriefly()
+				onWidthChanged:  overlay.displayBriefly()
+
+				Rectangle {
+					id: overlay
+
+					property bool enabled : false
+
+					function displayBriefly() {
+						if ( enabled ) { animation.restart() }
+					}
+
+					anchors.fill: parent
+					opacity: 0
+					color: settings.terminal.overlayBackground
+
+					SequentialAnimation {
+						id: animation
+
+						ScriptAction {
+							script: overlay.opacity = 0.8
+						}
+
+						PauseAnimation {
+							duration: 500
+						}
+
+						NumberAnimation {
+							target:   overlay
+							property: "opacity"
+
+							easing.type: Easing.InSine
+							duration: 300
+							from:     0.8
+							to:       0
+						}
+					}
+
+					Text {
+						anchors {
+							horizontalCenter: overlay.horizontalCenter
+							verticalCenter:   overlay.verticalCenter
+						}
+
+						font {
+							family:    settings.terminal.fontFamily
+							pointSize: settings.terminal.fontSize * 2
+						}
+						color: settings.terminal.overlayFontColor
+
+						text: {
+							return item.lines
+							     + 'x'
+							     + Math.floor(terminal.width / terminal.fontMetrics.width);
+						}
+					}
+				}
+
+				MouseArea {
+					anchors.fill: parent
+					acceptedButtons: Qt.NoButton
+					onWheel: { }
 				}
 			}
 
-			Component.onCompleted: {
-				forceActiveFocus();
-				highlighter.select();
-				session.startShellProgram();
-				overlay.enabled = true;
-			}
+			RowLayout {
+				id: statusLine
 
-			onTermGetFocus:  highlighter.focus()
-			onTermLostFocus: highlighter.unfocus()
-			onHeightChanged: overlay.displayBriefly()
-			onWidthChanged:  overlay.displayBriefly()
+				Layout.fillWidth: true
+				Layout.alignment: Qt.AlignRight
 
-			Rectangle {
-				id: overlay
+				spacing: 5
 
-				property bool enabled : false
+				function update() {
+					var shellPID = session.getShellPID();
 
-				function displayBriefly() {
-					if ( enabled ) { animation.restart() }
-				}
-
-				anchors.fill: parent
-				opacity: 0
-				color: settings.terminal.overlayBackground
-
-				SequentialAnimation {
-					id: animation
-
-					ScriptAction {
-						script: overlay.opacity = 0.8
-					}
-
-					PauseAnimation {
-						duration: 500
-					}
-
-					NumberAnimation {
-						target:   overlay
-						property: "opacity"
-
-						easing.type: Easing.InSine
-						duration: 300
-						from:     0.8
-						to:       0
-					}
+					pid.text              = shellPID;
+					workingDirectory.text = cwd.currentOfPID(shellPID);
 				}
 
 				Text {
-					anchors {
-						horizontalCenter: overlay.horizontalCenter
-						verticalCenter:   overlay.verticalCenter
-					}
+					id: pid
 
 					font {
 						family:    settings.terminal.fontFamily
-						pointSize: settings.terminal.fontSize * 2
+						pointSize: settings.terminal.fontSize
 					}
-					color: settings.terminal.overlayFontColor
-
-					text: {
-						return item.lines
-						       + 'x'
-						       + Math.floor(terminal.width / terminal.fontMetrics.width);
-					}
+					color: settings.terminal.statusFontColor
 				}
-			}
 
-			MouseArea {
-				anchors.fill: parent
-				acceptedButtons: Qt.NoButton
-				onWheel: { }
+				Text {
+					font {
+						family:    settings.terminal.fontFamily
+						pointSize: settings.terminal.fontSize
+					}
+					color: settings.terminal.statusFontColor
+
+					text: "@"
+				}
+
+				Text {
+					id: workingDirectory
+
+					font {
+						family:    settings.terminal.fontFamily
+						pointSize: settings.terminal.fontSize
+					}
+					color: settings.terminal.statusFontColor
+				}
 			}
 		}
 	}
