@@ -154,67 +154,12 @@ Item {
 				}
 			}
 
-			RowLayout {
+			StatusLine {
 				id: statusLine
 
 				Layout.fillWidth: true
-				Layout.alignment: Qt.AlignRight
 
-				spacing: 5
-
-				function update() {
-					var shellPID = session.getShellPID();
-
-					pid.text              = shellPID;
-					workingDirectory.text = cwd.currentOfPID(shellPID);
-				}
-
-				Rectangle {
-					Layout.fillWidth: true
-
-					anchors.fill: parent
-
-					color: settings.terminal.statusBackground
-				}
-
-				Text {
-					id: pid
-
-					Layout.rightMargin:  4
-					Layout.bottomMargin: 2
-
-					font {
-						family:    settings.terminal.fontFamily
-						pointSize: settings.terminal.fontSize
-					}
-					color: settings.terminal.statusFontColor
-				}
-
-				Text {
-					Layout.rightMargin:  4
-					Layout.bottomMargin: 2
-
-					font {
-						family:    settings.terminal.fontFamily
-						pointSize: settings.terminal.fontSize
-					}
-					color: settings.terminal.statusFontColor
-
-					text: "@"
-				}
-
-				Text {
-					id: workingDirectory
-
-					Layout.rightMargin:  4
-					Layout.bottomMargin: 2
-
-					font {
-						family:    settings.terminal.fontFamily
-						pointSize: settings.terminal.fontSize
-					}
-					color: settings.terminal.statusFontColor
-				}
+				session: terminal.session
 			}
 		}
 	}
