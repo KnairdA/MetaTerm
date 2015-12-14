@@ -84,7 +84,11 @@ Item {
 					statusLine.update();
 				}
 
-				onTermLostFocus: highlighter.unfocus()
+				onTermLostFocus: {
+					highlighter.unfocus();
+					statusLine.update();
+				}
+
 				onHeightChanged: overlay.displayBriefly()
 				onWidthChanged:  overlay.displayBriefly()
 
@@ -165,8 +169,19 @@ Item {
 					workingDirectory.text = cwd.currentOfPID(shellPID);
 				}
 
+				Rectangle {
+					Layout.fillWidth: true
+
+					anchors.fill: parent
+
+					color: settings.terminal.statusBackground
+				}
+
 				Text {
 					id: pid
+
+					Layout.rightMargin:  4
+					Layout.bottomMargin: 2
 
 					font {
 						family:    settings.terminal.fontFamily
@@ -176,6 +191,9 @@ Item {
 				}
 
 				Text {
+					Layout.rightMargin:  4
+					Layout.bottomMargin: 2
+
 					font {
 						family:    settings.terminal.fontFamily
 						pointSize: settings.terminal.fontSize
@@ -187,6 +205,9 @@ Item {
 
 				Text {
 					id: workingDirectory
+
+					Layout.rightMargin:  4
+					Layout.bottomMargin: 2
 
 					font {
 						family:    settings.terminal.fontFamily

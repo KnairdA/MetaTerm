@@ -69,6 +69,7 @@ QtObject {
 		property string overlayBackground       : "black"
 		property string overlayFontColor        : "white"
 		property string statusFontColor         : "gray"
+		property string statusBackground        : "black"
 	}
 
 	property Settings command : Settings {
