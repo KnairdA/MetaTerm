@@ -3,9 +3,8 @@ import QtQuick 2.0
 Item {
 	id: item
 
-	property bool enabled : false
-
-	property alias text : content.text
+	property bool  enabled : false
+	property alias text    : content.text
 
 	function displayBriefly() {
 		if ( enabled ) {
