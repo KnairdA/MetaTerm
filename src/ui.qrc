@@ -11,5 +11,6 @@
 		<file alias="StatusLine.qml">widget/StatusLine.qml</file>
 		<file alias="HistoryViewer.qml">widget/HistoryViewer.qml</file>
 		<file alias="Highlighter.qml">widget/Highlighter.qml</file>
+		<file alias="Overlay.qml">widget/Overlay.qml</file>
 	</qresource>
 </RCC>

@@ -92,59 +92,14 @@ Item {
 				onHeightChanged: overlay.displayBriefly()
 				onWidthChanged:  overlay.displayBriefly()
 
-				Rectangle {
+				Overlay {
 					id: overlay
 
-					property bool enabled : false
-
-					function displayBriefly() {
-						if ( enabled ) { animation.restart() }
-					}
-
 					anchors.fill: parent
-					opacity: 0
-					color: settings.terminal.overlayBackground
 
-					SequentialAnimation {
-						id: animation
-
-						ScriptAction {
-							script: overlay.opacity = 0.8
-						}
-
-						PauseAnimation {
-							duration: 500
-						}
-
-						NumberAnimation {
-							target:   overlay
-							property: "opacity"
-
-							easing.type: Easing.InSine
-							duration: 300
-							from:     0.8
-							to:       0
-						}
-					}
-
-					Text {
-						anchors {
-							horizontalCenter: overlay.horizontalCenter
-							verticalCenter:   overlay.verticalCenter
-						}
-
-						font {
-							family:    settings.terminal.fontFamily
-							pointSize: settings.terminal.fontSize * 2
-						}
-						color: settings.terminal.overlayFontColor
-
-						text: {
-							return item.lines
-							     + 'x'
-							     + Math.floor(terminal.width / terminal.fontMetrics.width);
-						}
-					}
+					text: item.lines
+					    + 'x'
+					    + Math.floor(terminal.width / terminal.fontMetrics.width)
 				}
 
 				MouseArea {
